@@ -9,4 +9,4 @@ A repository for a course called **Ohjelmistotekniikka** in University of Helsin
 * _Currently none_ / Ei mitään tällä hetkellä
 
 ## Test area / Testialue
-foo bar
+foo bar ほげ
