@@ -1,0 +1,114 @@
+commit 19ee7ef66f608338dccbfe1c728e9c5c533158e5
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:48:39 2020 +0200
+
+    file2 -> file22 ja poistettu file1
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ tiedostoja/file3             | 1 +
+ 3 files changed, 1 insertion(+)
+
+commit 7adb9ce538b84725f2865d3ee76225105d5f5327
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:46:27 2020 +0200
+
+    lisätty file1,2,3
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit c74c50e95a87d9b4d936916a16eb0811b4eb6620
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:39:57 2020 +0200
+
+    muutoksia tiedostoihin
+
+ eka.txt    | 2 +-
+ kolmas.txt | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 2568dd74abd931b587d647798dc4c3c61facc725
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:39:02 2020 +0200
+
+    muutos
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 1ff41e208125cc37def95e8d5ac41d8fea865925
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:34:00 2020 +0200
+
+    poistettu toinen.txt
+
+ toinen.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 5139909c87814e07c7a0de28f5467ea17a1e51ff
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:32:55 2020 +0200
+
+    poistettu ja lisätty tekstiä
+
+ tiedosto.txt | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
+
+commit 0c42d84baffe163d07e9fcc797c78783d0c29d08
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:32:07 2020 +0200
+
+    lisätty tekstiä
+
+ tiedosto.txt | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+commit c60a685fa201eaa065448016f6435fd66579986b
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:31:16 2020 +0200
+
+    uusi tiedosto ja kansio
+
+ stuff/jokin.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 1b2c7b677ec3f384c11a86991450ab06595ab112
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:30:00 2020 +0200
+
+    muutettu sisältöjä
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 953f40625ae725ab508d6da34ec38231fb019598
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:28:20 2020 +0200
+
+    lisätty kolmas.txt
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 3a315df699ae599f49a3d91a14c7842f207fbf05
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:12:06 2020 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit c941ef588529839c3ccbe2b68e3a3ff6054068cd
+Author: Marko Leinikka <marko.leinikka@helsinki.fi>
+Date:   Sun Mar 8 21:06:50 2020 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
