@@ -44,7 +44,6 @@ public class Main {
                 continue;
             }
 
-
             System.out.println();
             System.out.println("Word: " + parser.parseWord() + " | Reading: " + parser.parseReading());
             System.out.println("Meanings: ");

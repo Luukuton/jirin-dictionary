@@ -6,7 +6,15 @@ Software requirements specifications [here](documentation/software_requirements_
 
 Time accounting for the project [here](documentation/time_accounting.md).
 
-### Testing
+## Running
+
+The application can be run with: 
+
+```
+mvn compile exec:java -Dexec.mainClass=jirin.Main
+```
+
+## Testing
 
 Tests are performed with: 
 
@@ -22,7 +30,7 @@ mvn jacoco:report
 
 Code coverage can be viewed by opening _target/site/jacoco/index.html_ in a browser.
 
-### Generating JAR file
+## Generating JAR file
 
 Following command 
 
@@ -32,7 +40,7 @@ mvn package
 
 generates a runnable JAR file, _jiten-1.0-SNAPSHOT.jar_, to the _target_ directory.
 
-### JavaDoc
+## JavaDoc
 
 JavaDoc files are created with: 
 
