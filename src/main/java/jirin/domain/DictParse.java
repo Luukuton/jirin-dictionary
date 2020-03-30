@@ -21,6 +21,8 @@ public class DictParse {
 
     /**
      * Parses the word itself in kanji form if applicable.
+     *
+     * @return return the word as String.
      */
 
     public String parseWord() {
@@ -33,6 +35,8 @@ public class DictParse {
 
     /**
      * Parses the reading of the word and removes Japanese parentheses.
+     *
+     * @return return the reading of a word as String.
      */
 
     public String parseReading() {
@@ -50,6 +54,8 @@ public class DictParse {
 
     /**
      * Parses all meanings of the word into an ArrayList.
+     *
+     * @return return meanings in an array.
      */
 
     public ArrayList<String> parseMeaning() {
