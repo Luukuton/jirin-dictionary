@@ -10,11 +10,13 @@ A draft of the interface:
 F as in Favorites and S as in Settings.
 
 ## Functionality
- * Search words or proverbs through a search bar
- * Different search modes ("starts with", "ends with", "exact")
- * Save search results as favorites to a database
- * Open up the source webpage through a link
- * Customize the application through some basic settings
+- [x] Basic search functionality
+- [x] Basic UI
+- [ ] Search words or proverbs through a search bar
+- [ ] Different search modes ("starts with", "ends with", "exact")
+- [ ] Save search results as favorites to a database
+- [ ] Open up the source webpage through a link
+- [ ] Customize the application through some basic settings (font, theme etc.)
  
 ## Ideas for future
  * More search modes such as "includes"
