@@ -2,9 +2,9 @@
 A Java application for searching and parsing online monolingual Japanese dictionaries. Initially support only for [goo辞典](https://dictionary.goo.ne.jp/). The name comes from the lesser used Japanese word for dictionary, 辞林.
 
 ## Documentation
-Software requirements specifications [here](documentation/software_requirements_specification.md).
-
-Time accounting for the project [here](documentation/time_accounting.md).
+- [Software requirements specifications](documentation/software_requirements_specification.md)
+- [Architecture](documentation/architecture.md)
+- [Time accounting](documentation/time_accounting.md)
 
 ## Running
 
