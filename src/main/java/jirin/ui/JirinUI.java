@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class JirinUI extends Application {
 
@@ -25,44 +25,58 @@ public class JirinUI extends Application {
 
         var root = new GridPane();
 
-        // Better antialiasing for the text.
-        System.setProperty("prism.lcdtext", "false");
-
         root.setGridLinesVisible(false);
         root.setVgap(10);
         root.setHgap(5);
         root.setPadding(new Insets(10));
 
-        var searchFont = Font.loadFont(
-                JirinUI.class.getClassLoader().getResourceAsStream("MPLUSRounded1c-Regular.ttf"), 45
-        );
-
-        var resultsFont = Font.loadFont(
-                JirinUI.class.getClassLoader().getResourceAsStream("MPLUSRounded1c-Regular.ttf"), 20
-        );
+        // Better antialiasing for the text.
+        System.setProperty("prism.lcdtext", "false");
 
         // Search bar
         var searchField = new TextField();
+
         searchField.setPromptText("Search here..");
-        searchField.setPrefWidth(600);
-        searchField.setFont(searchFont);
+        searchField.setPrefWidth(960);
 
         // Results
-        Label error = new Label();
-        Label resultWord = new Label();
-        Label resultReading = new Label();
-        ArrayList<Label> resultMeanings = new ArrayList<>();
+        var error = new Label();
+        var resultWordReading = new Label();
+        var resultMeaning = new Label();
 
+        resultMeaning.setWrapText(true);
+        resultMeaning.setPrefSize(960, 200);
+        resultMeaning.setMaxHeight(720);
+
+        // Other elements
+        var guide = new TextField();
+
+        guide.setText("Examples: 猫, 楽観, 聞く. As in 'cat', 'optimism', 'to hear'.");
+        guide.getStyleClass().add("copyable-label");
+        guide.setEditable(false);
+
+        // Styling and fonts
+        root.getStylesheets().add(
+                Objects.requireNonNull(JirinUI.class.getClassLoader().getResource("style.css")).toExternalForm()
+        );
+
+        var searchFont = Font.loadFont(
+                JirinUI.class.getClassLoader().getResourceAsStream("MPLUSRounded1c-Regular.ttf"), 40
+        );
+
+        var resultsFont = Font.loadFont(
+                JirinUI.class.getClassLoader().getResourceAsStream("MPLUSRounded1c-Regular.ttf"), 25
+        );
+
+        searchField.setFont(searchFont);
+        resultWordReading.setFont(resultsFont);
+        resultMeaning.setFont(resultsFont);
         error.setFont(resultsFont);
-        resultWord.setFont(resultsFont);
-        resultReading.setFont(resultsFont);
+        guide.setFont(resultsFont);
 
-
-        // By not setting the focus on this node, the hint will be displayed immediately.
-        // searchField.getParent().requestFocus();
-
-        // "Example words to try: 猫, 想像 and 聞く."
-        // "As in 'cat', 'imagination' and 'to hear'."
+        // Do not focus on anything at app launch.
+        guide.setFocusTraversable(false);
+        searchField.setFocusTraversable(false);
 
         searchField.setOnKeyPressed(new EventHandler<>() {
             JirinService jirinService = new JirinService();
@@ -72,24 +86,30 @@ public class JirinUI extends Application {
                     DictEntry entry = jirinService.queryDict(searchInput);
 
                     if (entry == null) {
+                        resultWordReading.setText("");
+                        resultMeaning.setText("");
                         error.setText(jirinService.getException());
                     } else {
                         error.setText("");
-                        resultWord.setText(entry.getWord());
-                        resultReading.setText(entry.getReading());
+                        resultWordReading.setText("【" + entry.getWord() + "】" + entry.getReading());
 
+                        String meaningFormatted = "";
                         for (String m : entry.getMeanings()) {
-                            resultMeanings.add(new Label(m));
+                            meaningFormatted = meaningFormatted.concat(m + "\n");
                         }
+
+                        resultMeaning.setText(meaningFormatted);
                     }
                 }
             }
         });
 
-        root.add(error, 0, 10);
-        root.add(searchField, 0, 0);
-        root.add(resultWord, 10, 0);
-        root.add(resultReading, 5, 0);
+        root.add(guide, 0, 0);
+        root.add(searchField, 0, 1);
+        root.add(error, 0, 2);
+        root.add(resultWordReading, 0, 2);
+        root.add(resultMeaning, 0, 3);
+
 
         root.setAlignment(Pos.CENTER);
 

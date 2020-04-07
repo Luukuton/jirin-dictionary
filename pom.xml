@@ -79,6 +79,7 @@
         <resources>
             <resource><directory>src/main/resources</directory></resource>
             <resource><directory>src/main/resources/font</directory></resource>
+            <resource><directory>src/main/resources/css</directory></resource>
         </resources>
     </build>
     <properties>
