@@ -20,6 +20,11 @@ public class JirinService {
         String url = "https://dictionary.goo.ne.jp/word/";
         exception = "Unkown error.";
 
+        if (input.length() == 0) {
+            exception = "Search term cannot be nothing.";
+            return null;
+        }
+
         try {
             DictParse parser = new DictParse(url + input);
             return new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseMeaning());
