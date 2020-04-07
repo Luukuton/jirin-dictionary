@@ -18,27 +18,20 @@ public class JirinService {
 
     public DictEntry queryDict(String input) {
         String url = "https://dictionary.goo.ne.jp/word/";
-        exception = "Unkown error.";
+        exception = "Search term cannot be nothing.";
 
-        if (input.length() == 0) {
-            exception = "Search term cannot be nothing.";
-            return null;
-        }
+        if (input.length() == 0) return null;
 
         try {
             DictParse parser = new DictParse(url + input);
             return new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseMeaning());
-        }
-        catch (UnknownHostException e) {
+        } catch (UnknownHostException e) {
             exception = "Please check your internet connection.";
-        }
-        catch (SocketTimeoutException e) {
+        } catch (SocketTimeoutException e) {
             exception = "Server took too long to respond.";
-        }
-        catch (HttpStatusException e) {
+        } catch (HttpStatusException e) {
             exception = "Word not found.";
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             exception = "Unknown error.";
         }
         return null;

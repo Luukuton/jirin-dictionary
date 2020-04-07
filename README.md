@@ -53,6 +53,18 @@ mvn javadoc:javadoc
 
 They can be viewed by opening _target/site/apidocs/index.html_ in a browser.
 
-## Dependancies
+## CheckStyle
+
+Checks defined in [checkstyle.xml](https://github.com/mluukkai/OtmTodoApp/blob/master/checkstyle.xml) can be executed with: 
+
+```
+mvn jxr:jxr checkstyle:checkstyle
+```
+
+Results can be viewed by opening _target/site/checkstyle.html_ in a browser.
+
+
+## Dependencies
 * Java 11
+* Maven 
 
