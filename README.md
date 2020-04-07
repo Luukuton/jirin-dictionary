@@ -55,7 +55,7 @@ They can be viewed by opening _target/site/apidocs/index.html_ in a browser.
 
 ## CheckStyle
 
-Checks defined in [checkstyle.xml](https://github.com/mluukkai/OtmTodoApp/blob/master/checkstyle.xml) can be executed with: 
+Checks defined in [checkstyle.xml](checkstyle.xml) can be executed with: 
 
 ```
 mvn jxr:jxr checkstyle:checkstyle
