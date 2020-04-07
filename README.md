@@ -41,7 +41,7 @@ Following command
 mvn package
 ```
 
-generates a runnable JAR file, _jiten-1.0-SNAPSHOT.jar_, to the _target_ directory.
+generates a runnable JAR file, _jirin-1.0-SNAPSHOT.jar_, to the _target_ directory.
 
 ## JavaDoc
 

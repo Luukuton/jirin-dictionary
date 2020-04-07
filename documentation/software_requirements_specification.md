@@ -10,9 +10,8 @@ A draft of the interface:
 F as in Favorites and S as in Settings.
 
 ## Functionality
-- [x] Basic search functionality
-- [x] Basic UI
-- [ ] Search words or proverbs through a search bar
+- [x] Clean UI
+- [x] Search words or proverbs through a search bar (returns word, reading, meanings)
 - [ ] Different search modes ("starts with", "ends with", "exact")
 - [ ] Save search results as favorites to a database
 - [ ] Open up the source webpage through a link
