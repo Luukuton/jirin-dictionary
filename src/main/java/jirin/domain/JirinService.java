@@ -20,7 +20,9 @@ public class JirinService {
         String url = "https://dictionary.goo.ne.jp/word/";
         exception = "Search term cannot be nothing.";
 
-        if (input.length() == 0) return null;
+        if (input.length() == 0) {
+            return null;
+        }
 
         try {
             DictParse parser = new DictParse(url + input);

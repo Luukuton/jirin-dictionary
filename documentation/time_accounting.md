@@ -11,3 +11,4 @@
 | 04.06 | 3   | basic UI, more backend logic |
 | 04.07 | ½   | class diagrams, Maven configuration |
 | 04.07 | 3   | more functionality in UI and more tests |
+| 04.08 | 1   | search button, better text areas and scroll bar |
