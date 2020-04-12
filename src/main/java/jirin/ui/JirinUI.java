@@ -28,12 +28,14 @@ public class JirinUI extends Application {
     TextField searchField, resultsWordReading, error;
     TextArea resultsMeaning;
     Font contentFont, searchFont;
+    Settings settings;
 
 
-    private void initUI(Stage stage) {
+    private void initUI(Stage stage) throws IOException {
 
         // Better antialiasing for the text.
         System.setProperty("prism.lcdtext", "false");
+        settings = new Settings();
 
         var layout = new BorderPane();
         content = new GridPane();
@@ -68,8 +70,9 @@ public class JirinUI extends Application {
         resultsMeaningArea.setContent(resultsMeaning);
 
         // Styling and fonts
-        header.getStyleClass().add("light");
-        content.getStyleClass().add("light");
+        themeSwitch(settings.getTheme());
+        // header.getStyleClass().add("light");
+        // content.getStyleClass().add("light");
         header.getStyleClass().add("general-style");
         content.getStyleClass().add("general-style");
 
@@ -119,11 +122,7 @@ public class JirinUI extends Application {
         });
 
         settingsBtn.setOnAction(e -> {
-            try {
-                spawnSettings();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            spawnSettings();
         });
 
         // Close all child windows when exiting the main app
@@ -212,9 +211,7 @@ public class JirinUI extends Application {
         favoritesBtn.setGraphic(favoritesBtnRegion);
     }
 
-    private void spawnSettings() throws IOException {
-        Settings settings = new Settings();
-
+    private void spawnSettings() {
         var stage = new Stage();
         var settingsContent = new GridPane();
         var scene = new Scene(settingsContent);
@@ -274,18 +271,7 @@ public class JirinUI extends Application {
 
         // Actions
         saveBtn.setOnAction(e -> {
-            if (themeChoice.getValue().equals("Light")) {
-                header.getStyleClass().add("light");
-                content.getStyleClass().add("light");
-                header.getStyleClass().remove("dark");
-                content.getStyleClass().remove("dark");
-
-            } else {
-                header.getStyleClass().add("dark");
-                content.getStyleClass().add("dark");
-                header.getStyleClass().remove("light");
-                content.getStyleClass().remove("light");
-            }
+            themeSwitch(themeChoice.getValue());
 
             try {
                 settings.saveSettings(
@@ -320,8 +306,23 @@ public class JirinUI extends Application {
         stage.show();
     }
 
+    private void themeSwitch(String theme) {
+        if (theme.toLowerCase().equals("light")) {
+            header.getStyleClass().add("light");
+            content.getStyleClass().add("light");
+            header.getStyleClass().remove("dark");
+            content.getStyleClass().remove("dark");
+
+        } else {
+            header.getStyleClass().add("dark");
+            content.getStyleClass().add("dark");
+            header.getStyleClass().remove("light");
+            content.getStyleClass().remove("light");
+        }
+    }
+
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         initUI(stage);
     }
 

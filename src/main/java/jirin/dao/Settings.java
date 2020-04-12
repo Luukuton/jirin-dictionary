@@ -12,6 +12,7 @@ public class Settings {
 
     public Settings() throws IOException {
         settingsFile = "settings.properties";
+
         FileInputStream in = new FileInputStream(settingsFile);
         settings = new Properties();
         settings.load(in);
