@@ -12,3 +12,6 @@
 | 04.07 | ½   | class diagrams, Maven configuration |
 | 04.07 | 3   | more functionality in UI and more tests |
 | 04.08 | 1   | search button, better text areas and scroll bar |
+| 04.11 | 2   | dark mode and buttons for settings, favorites, theme switch |
+| 04.12 | ½   | sequence diagram, Maven configuration |
+| 04.12 | 3   | dark mode, settings window, simple config file, more buttons with icons |

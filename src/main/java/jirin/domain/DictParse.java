@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 
 public class DictParse {
-    private Document dictSite;
+    private final Document dictSite;
 
     public DictParse(String address) throws IOException {
         this.dictSite = Jsoup.connect(address).get();

@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 
 public class DictEntry {
-    private String word, reading;
-    private ArrayList<String> meanings;
+    private final String word, reading;
+    private final ArrayList<String> meanings;
 
     public DictEntry(String word, String reading, ArrayList<String> meanings) {
         this.word = word;
