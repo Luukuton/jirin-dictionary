@@ -15,3 +15,7 @@
 | 04.11 | 2   | dark mode and buttons for settings, favorites, theme switch |
 | 04.12 | ½   | sequence diagram, Maven configuration |
 | 04.12 | 3   | dark mode, settings window, simple config file, more buttons with icons |
+| 04.20 | ½   | tests for the settings handling and JavaDoc |
+| 04.20 | 2   | source link to the search results and tests for it + also minor betterments |
+
+**TOTAL: 23.5 hours**

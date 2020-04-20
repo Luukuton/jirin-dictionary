@@ -6,7 +6,7 @@
 
     <groupId>jirin</groupId>
     <artifactId>jirin</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
@@ -14,11 +14,6 @@
             <artifactId>junit</artifactId>
             <version>4.13</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-configuration2</artifactId>
-            <version>2.7</version>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>

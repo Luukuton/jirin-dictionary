@@ -1,5 +1,7 @@
 package jirin.domain;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +16,16 @@ public class DictEntry {
         this.word = word;
         this.reading = reading;
         this.meanings = meanings;
+    }
+
+    /**
+     * Encodes the word in UTF-8. Used in URLs.
+     *
+     * @return return the word encoded in UTF-8
+     */
+
+    public String hexEncodeWord() {
+        return URLEncoder.encode(word, StandardCharsets.UTF_8);
     }
 
     public String getWord() {

@@ -6,11 +6,13 @@
 .dark {
     -bg-color: #262626;
     -font-color: whitesmoke;
+    -link-color: #7092f3;
 }
 
 .light {
     -bg-color: whitesmoke;
     -font-color: #333333;
+    -link-color: #193486;
 }
 
 .general-style {
@@ -42,6 +44,18 @@
 
 .button:hover {
     -icon-paint: linear-gradient(to bottom, #848484, #303030);
+}
+
+.hyperlink, .hyperlink:visited {
+    -size: 60px;
+    -fx-border-width: 0px;
+    -fx-text-fill: -link-color;
+}
+
+.hyperlink:focused {
+    -size: 60px;
+    -fx-border-width: 0px;
+    -fx-text-fill: -link-color;
 }
 
 /* Icons */
