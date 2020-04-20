@@ -30,12 +30,11 @@ public class JirinUI extends Application {
     Font contentFont, searchFont;
     Settings settings;
 
-
     private void initUI(Stage stage) throws IOException {
 
         // Better antialiasing for the text.
         System.setProperty("prism.lcdtext", "false");
-        settings = new Settings();
+        settings = new Settings("settings.properties");
 
         var layout = new BorderPane();
         content = new GridPane();
@@ -121,9 +120,7 @@ public class JirinUI extends Application {
             showSearchResults(jirinService);
         });
 
-        settingsBtn.setOnAction(e -> {
-            spawnSettings();
-        });
+        settingsBtn.setOnAction(e -> spawnSettings());
 
         // Close all child windows when exiting the main app
         stage.setOnCloseRequest(e -> {
@@ -285,9 +282,7 @@ public class JirinUI extends Application {
             stage.close();
         });
 
-        cancelBtn.setOnAction(e -> {
-            stage.close();
-        });
+        cancelBtn.setOnAction(e -> stage.close());
 
         settingsContent.add(themeLabel, 0, 0);
         settingsContent.add(searchFontLabel, 0, 1);

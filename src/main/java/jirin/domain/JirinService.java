@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+/**
+ * A class for getting results of an online Japanese dictionary.
+ */
+
 public class JirinService {
 
     private String exception;

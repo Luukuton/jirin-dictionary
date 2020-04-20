@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * A class for the parsing of an online Japanese dictionary.
+ * A class for parsing a Japanese dictionary.
  */
 
 public class DictParse {

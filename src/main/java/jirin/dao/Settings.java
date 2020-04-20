@@ -5,13 +5,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * A class for the handling of the settings.properties file.
+ */
+
 public class Settings {
     private final Properties settings;
     private final String settingsFile;
     private String contentFont, searchFont, theme;
 
-    public Settings() throws IOException {
-        settingsFile = "settings.properties";
+    public Settings(String filename) throws IOException {
+        settingsFile = filename;
 
         FileInputStream in = new FileInputStream(settingsFile);
         settings = new Properties();
@@ -21,6 +25,10 @@ public class Settings {
         searchFont = settings.getProperty("searchFont");
         contentFont = settings.getProperty("contentFont");
     }
+
+    /**
+     * Saves application settings to the settings file.
+     */
 
     public void saveSettings(String searchFont, String contentFont, String theme) throws IOException {
         this.contentFont = contentFont;

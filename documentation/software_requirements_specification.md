@@ -12,10 +12,10 @@ F as in Favorites and S as in Settings.
 ## Functionality
 - [x] Clean UI
 - [x] Search words or proverbs through a search bar (returns word, reading, meanings)
+- [x] Customize the application through some basic settings (font, theme etc.)
+- [ ] Open up the source webpage through a link
 - [ ] Different search modes ("starts with", "ends with", "exact")
 - [ ] Save search results as favorites to a database
-- [ ] Open up the source webpage through a link
-- [ ] Customize the application through some basic settings (font, theme etc.)
  
 ## Ideas for future
  * More search modes such as "includes"
