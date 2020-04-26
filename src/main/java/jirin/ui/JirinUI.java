@@ -25,6 +25,7 @@ import java.util.Objects;
 public class JirinUI extends Application {
     Button searchBtn, settingsBtn, favoritesBtn;
     GridPane header, content, favorites;
+    ComboBox<String> modeChoice;
     Font searchFont, contentFont;
     Hyperlink sourceLink;
     Region settingsBtnRegion, favoritesBtnRegion, searchBtnRegion;
@@ -59,6 +60,8 @@ public class JirinUI extends Application {
         searchField.setPromptText("Search here..");
         searchField.setPrefWidth(960);
         var helpText = new TextField("Examples: 猫, 楽観, 聞く. As in 'cat', 'optimism', 'to hear'.");
+        modeChoice = new ComboBox<>(FXCollections.observableArrayList("Exact", "Forward", "Backward"));
+        modeChoice.getSelectionModel().select("Exact");
 
         createButtons();
 
@@ -88,6 +91,7 @@ public class JirinUI extends Application {
         searchFont = fontSet(settings.getSearchFont(), 40);
         contentFont = fontSet(settings.getContentFont(), 25);
 
+        header.getStyleClass().add("header");
         header.getStyleClass().add("general-style");
         content.getStyleClass().add("general-style");
 
@@ -139,6 +143,7 @@ public class JirinUI extends Application {
         int row = 0;
         header.add(settingsBtn,     0, row);
         header.add(favoritesBtn,    1, row);
+        header.add(modeChoice,      7, row);
         header.add(sourceLink,      8, row);
 
         content.add(helpText,       0, row);
@@ -166,7 +171,16 @@ public class JirinUI extends Application {
 
     private void showSearchResults(JirinService service) {
         String searchInput = searchField.getText();
-        DictEntry entry = service.queryDict(searchInput);
+        String mode = modeChoice.getValue();
+        if (mode.equals("Forward")) {
+            mode = "m0u";
+        } else if (mode.equals("Backward")) {
+            mode = "m2u";
+        } else {
+            mode = "m1u";
+        }
+
+        DictEntry entry = service.queryDict(searchInput, mode);
 
         if (entry == null) {
             resultsHeader.setText("");
@@ -253,18 +267,18 @@ public class JirinUI extends Application {
         contentFontLabel.setText("Font (content)");
         notice.setText("Restarting the app is required \nto apply any font changes.");
 
-        var themeChoice = new ChoiceBox<>(FXCollections.observableArrayList(
+        var themeChoice = new ComboBox<>(FXCollections.observableArrayList(
                 "Dark",
                 "Light"
         ));
 
-        var searchFontChoice = new ChoiceBox<>(FXCollections.observableArrayList(
+        var searchFontChoice = new ComboBox<>(FXCollections.observableArrayList(
                 "M Plus 1p",
                 "Noto Sans JP",
                 "Noto Serif JP"
         ));
 
-        var contentFontChoice = new ChoiceBox<>(FXCollections.observableArrayList(
+        var contentFontChoice = new ComboBox<>(FXCollections.observableArrayList(
                 "M Plus 1p",
                 "Noto Sans JP",
                 "Noto Serif JP"

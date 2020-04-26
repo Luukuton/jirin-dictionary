@@ -20,8 +20,7 @@ public class JirinService {
      * @return return results as DictEntry object or null if unsuccessful.
      */
 
-    public DictEntry queryDict(String input) {
-        String mode = "/m0u/";
+    public DictEntry queryDict(String input, String mode) {
         exception = "Search term cannot be nothing.";
 
         if (input.length() == 0) {
@@ -29,7 +28,7 @@ public class JirinService {
         }
 
         try {
-            DictParse parser = new DictParse(input + mode);
+            DictParse parser = new DictParse(input + "/" + mode);
             return new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseMeaning());
         } catch (UnknownHostException e) {
             exception = "Please check your internet connection.";

@@ -113,3 +113,8 @@
     -fx-font-family: "Noto Sans JP";
     -fx-font-size: 15px;
 }
+
+.header {
+    -fx-font-family: "Noto Sans JP";
+    -fx-font-size: 18px;
+}

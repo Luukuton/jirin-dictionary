@@ -9,31 +9,33 @@ import static org.junit.Assert.assertNull;
 public class JirinServiceTest {
 
     JirinService jirin;
+    String mode;
 
     @Before
     public void setUp() {
         jirin = new JirinService();
+        mode = "m0u";
     }
 
     @Test
     public void returnsNullWhenZeroLengthInput() {
-        assertNull(jirin.queryDict(""));
+        assertNull(jirin.queryDict("", mode));
     }
 
     @Test
     public void equalWhenReturnsCorrectErrorForZeroLengthInput() {
-        jirin.queryDict("");
+        jirin.queryDict("", mode);
         assertEquals("Search term cannot be nothing.", jirin.getException());
     }
 
     @Test
     public void returnsNullWhenWordNotFound() {
-        assertNull(jirin.queryDict("-"));
+        assertNull(jirin.queryDict("-", mode));
     }
 
     @Test
     public void equalWhenReturnsCorrectExceptionForWordNotFound() {
-        jirin.queryDict("-");
+        jirin.queryDict("-", mode);
         assertEquals("No results.", jirin.getException());
     }
 }
