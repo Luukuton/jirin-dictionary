@@ -1,4 +1,4 @@
-package jirin.domain;
+package fi.luukuton.jirin.domain;
 
 import java.util.ArrayList;
 

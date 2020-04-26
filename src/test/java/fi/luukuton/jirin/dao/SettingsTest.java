@@ -1,4 +1,4 @@
-package jirin.dao;
+package fi.luukuton.jirin.dao;
 
 import org.junit.Test;
 

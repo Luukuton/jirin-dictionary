@@ -1,4 +1,4 @@
-package jirin.domain;
+package fi.luukuton.jirin.domain;
 
 import org.jsoup.HttpStatusException;
 
@@ -17,6 +17,8 @@ public class JirinService {
     /**
      * Queries the word from the dictionary with the help of the DictParse.
      *
+     * @param input input string typed into the search bar by the user
+     * @param mode search mode (forward = m0u, exact = m1u, backward = m2u)
      * @return return results as DictEntry object or null if unsuccessful.
      */
 

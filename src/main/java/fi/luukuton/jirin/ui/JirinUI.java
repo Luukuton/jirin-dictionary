@@ -1,9 +1,9 @@
-package jirin.ui;
+package fi.luukuton.jirin.ui;
 
 import javafx.application.HostServices;
-import jirin.domain.JirinService;
-import jirin.domain.DictEntry;
-import jirin.dao.Settings;
+import fi.luukuton.jirin.domain.JirinService;
+import fi.luukuton.jirin.domain.DictEntry;
+import fi.luukuton.jirin.dao.Settings;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -23,16 +23,16 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class JirinUI extends Application {
-    Button searchBtn, settingsBtn, favoritesBtn;
-    GridPane header, content, favorites;
-    ComboBox<String> modeChoice;
-    Font searchFont, contentFont;
-    Hyperlink sourceLink;
-    Region settingsBtnRegion, favoritesBtnRegion, searchBtnRegion;
-    Settings settings;
-    String sourceURL;
-    TextField searchField, resultsHeader, error;
-    TextArea resultsMeaning;
+    private Button searchBtn, settingsBtn, favoritesBtn;
+    private GridPane header;
+    private GridPane content;
+    private ComboBox<String> modeChoice;
+    private Font searchFont, contentFont;
+    private Hyperlink sourceLink;
+    private Settings settings;
+    private String sourceURL;
+    private TextField searchField, resultsHeader, error;
+    private TextArea resultsMeaning;
 
     private void initUI(Stage stage) throws IOException {
 
@@ -44,7 +44,6 @@ public class JirinUI extends Application {
         var layout = new BorderPane();
         content = new GridPane();
         header = new GridPane();
-        favorites = new GridPane();
 
         content.setPadding(new Insets(10));
         content.setAlignment(Pos.CENTER);
@@ -155,7 +154,6 @@ public class JirinUI extends Application {
 
         layout.setTop(header);
         layout.setCenter(content);
-        layout.setRight(favorites);
 
         var scene = new Scene(layout, 1280, 720);
 
@@ -218,21 +216,21 @@ public class JirinUI extends Application {
         searchBtn = new Button();
         searchBtn.setPrefSize(50, 85);
         searchBtn.getStyleClass().add("button");
-        searchBtnRegion = new Region();
+        Region searchBtnRegion = new Region();
         searchBtnRegion.setId("search-icon");
         searchBtn.setGraphic(searchBtnRegion);
 
         settingsBtn = new Button();
         settingsBtn.setPrefSize(40, 40);
         settingsBtn.getStyleClass().add("button");
-        settingsBtnRegion = new Region();
+        Region settingsBtnRegion = new Region();
         settingsBtnRegion.setId("settings-icon");
         settingsBtn.setGraphic(settingsBtnRegion);
 
         favoritesBtn = new Button();
         favoritesBtn.setPrefSize(40, 40);
         favoritesBtn.getStyleClass().add("button");
-        favoritesBtnRegion = new Region();
+        Region favoritesBtnRegion = new Region();
         favoritesBtnRegion.setId("favorites-icon");
         favoritesBtn.setGraphic(favoritesBtnRegion);
     }

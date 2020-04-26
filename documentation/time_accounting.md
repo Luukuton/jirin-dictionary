@@ -17,5 +17,6 @@
 | 04.12 | 3   | dark mode, settings window, simple config file, more buttons with icons |
 | 04.20 | ½   | tests for the settings handling and JavaDoc |
 | 04.20 | 2   | source link to the search results and tests for it + also minor betterments |
-
-**TOTAL: 23.5 hours**
+| 04.26 | 2   | refactored how the DictParse searches words and added search modes |
+| 04.26 | ½   | changed project package structure, improved JavaDocs and updated documentation |
+**TOTAL: 26 hours**

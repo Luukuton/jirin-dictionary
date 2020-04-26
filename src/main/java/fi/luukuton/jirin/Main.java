@@ -1,7 +1,7 @@
-package jirin;
+package fi.luukuton.jirin;
 
-import jirin.dao.Settings;
-import jirin.ui.JirinUI;
+import fi.luukuton.jirin.dao.Settings;
+import fi.luukuton.jirin.ui.JirinUI;
 
 import java.io.File;
 import java.io.IOException;

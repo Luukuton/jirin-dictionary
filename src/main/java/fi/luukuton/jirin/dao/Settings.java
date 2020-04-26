@@ -1,4 +1,4 @@
-package jirin.dao;
+package fi.luukuton.jirin.dao;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,6 +28,11 @@ public class Settings {
 
     /**
      * Saves application settings to the settings file.
+     *
+     * @param searchFont name of the font used in the search bar
+     * @param contentFont name of the font used in the results and titles
+     * @param theme theme of the application (Light or Dark)
+     * @throws IOException possibly when the file is corrupted or deleted by a third party
      */
 
     public void saveSettings(String searchFont, String contentFont, String theme) throws IOException {

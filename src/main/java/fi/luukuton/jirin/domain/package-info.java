@@ -2,4 +2,4 @@
  * The application logic
  */
 
-package jirin.domain;
+package fi.luukuton.jirin.domain;

@@ -1,4 +1,4 @@
-package jirin.domain;
+package fi.luukuton.jirin.domain;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

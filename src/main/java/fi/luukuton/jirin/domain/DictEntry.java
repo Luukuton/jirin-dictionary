@@ -1,4 +1,4 @@
-package jirin.domain;
+package fi.luukuton.jirin.domain;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

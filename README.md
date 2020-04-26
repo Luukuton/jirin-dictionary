@@ -17,7 +17,7 @@ Latest: [Week 5](https://github.com/Luukuton/ot-harjoitustyo-hy2020/releases/tag
 The application can be run with: 
 
 ```
-mvn compile exec:java -Dexec.mainClass=jirin.Main
+mvn compile exec:java -Dexec.mainClass=fi.luukuton.jirin.Main
 ```
 
 ## Testing
