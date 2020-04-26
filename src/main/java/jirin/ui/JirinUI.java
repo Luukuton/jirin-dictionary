@@ -23,15 +23,15 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class JirinUI extends Application {
-    GridPane header, content, favorites;
     Button searchBtn, settingsBtn, favoritesBtn;
-    Region settingsBtnRegion, favoritesBtnRegion, searchBtnRegion;
+    GridPane header, content, favorites;
+    Font searchFont, contentFont;
     Hyperlink sourceLink;
+    Region settingsBtnRegion, favoritesBtnRegion, searchBtnRegion;
+    Settings settings;
     String sourceURL;
     TextField searchField, resultsHeader, error;
     TextArea resultsMeaning;
-    Font contentFont, searchFont;
-    Settings settings;
 
     private void initUI(Stage stage) throws IOException {
 
@@ -85,15 +85,8 @@ public class JirinUI extends Application {
                 Objects.requireNonNull(JirinUI.class.getClassLoader().getResource("style.css")).toExternalForm()
         );
 
-        searchFont = Font.loadFont(
-                JirinUI.class.getClassLoader().getResourceAsStream("MPLUSRounded1c-Regular.ttf"),
-                40
-        );
-
-        contentFont = Font.loadFont(
-                JirinUI.class.getClassLoader().getResourceAsStream("MPLUSRounded1c-Regular.ttf"),
-                25
-        );
+        searchFont = fontSet(settings.getSearchFont(), 40);
+        contentFont = fontSet(settings.getContentFont(), 25);
 
         header.getStyleClass().add("general-style");
         content.getStyleClass().add("general-style");
@@ -238,6 +231,7 @@ public class JirinUI extends Application {
         Button saveBtn = new Button(), cancelBtn = new Button();
         Region saveBtnRegion = new Region(), cancelBtnRegion = new Region();
         Label contentFontLabel = new Label(), searchFontLabel = new Label(), themeLabel = new Label();
+        Label notice = new Label();
 
         settingsContent.setPadding(new Insets(10));
         settingsContent.setAlignment(Pos.TOP_CENTER);
@@ -257,6 +251,7 @@ public class JirinUI extends Application {
         themeLabel.setText("Theme");
         searchFontLabel.setText("Font (search)");
         contentFontLabel.setText("Font (content)");
+        notice.setText("Restarting the app is required \nto apply any font changes.");
 
         var themeChoice = new ChoiceBox<>(FXCollections.observableArrayList(
                 "Dark",
@@ -291,6 +286,8 @@ public class JirinUI extends Application {
         // Actions
         saveBtn.setOnAction(e -> {
             themeSwitch(themeChoice.getValue());
+            searchFont = fontSet(searchFontChoice.getValue(), 40);
+            contentFont = fontSet(contentFontChoice.getValue(), 25);
 
             try {
                 settings.saveSettings(
@@ -313,11 +310,12 @@ public class JirinUI extends Application {
         settingsContent.add(contentFontChoice, 1, row);
         settingsContent.add(searchFontChoice,  1, ++row);
         settingsContent.add(contentFontLabel,  0, row);
+        settingsContent.add(notice,            1, ++row);
         settingsContent.add(saveBtn,           0, ++row);
         settingsContent.add(cancelBtn,         1, row);
 
         scene.setOnMousePressed(event -> settingsContent.requestFocus());
-        stage.setMinWidth(300);
+        stage.setMinWidth(350);
         stage.setMinHeight(250);
         stage.setTitle("Jirin | Settings");
         stage.setScene(scene);
@@ -335,6 +333,25 @@ public class JirinUI extends Application {
             content.getStyleClass().add("dark");
             header.getStyleClass().remove("light");
             content.getStyleClass().remove("light");
+        }
+    }
+
+    private Font fontSet(String fontName, int size) {
+        if (fontName.toLowerCase().equals("noto serif jp")) {
+            return Font.loadFont(
+                    JirinUI.class.getClassLoader().getResourceAsStream("NotoSerifJP-Regular.otf"),
+                    size
+            );
+        } else if (fontName.toLowerCase().equals("noto sans jp")) {
+            return Font.loadFont(
+                    JirinUI.class.getClassLoader().getResourceAsStream("NotoSansJP-Regular.otf"),
+                    size
+            );
+        } else {
+            return Font.loadFont(
+                    JirinUI.class.getClassLoader().getResourceAsStream("MPLUSRounded1c-Regular.ttf"),
+                    size
+            );
         }
     }
 
