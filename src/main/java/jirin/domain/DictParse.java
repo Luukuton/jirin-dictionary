@@ -7,6 +7,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A class for parsing a Japanese dictionary.
@@ -14,9 +15,46 @@ import java.util.ArrayList;
 
 public class DictParse {
     private final Document dictSite;
+    private final String domainURL, contentURL;
 
-    public DictParse(String address) throws IOException {
-        this.dictSite = Jsoup.connect(address).get();
+    public DictParse(String query) throws IOException {
+        String searchResult;
+        domainURL = "https://dictionary.goo.ne.jp";
+        contentURL = query;
+
+        // If no results, or if the search was directly redirected to the result page.
+        if (!(parseSearchResults() == null)) {
+            searchResult = Objects.requireNonNull(parseSearchResults()).get(0);
+        } else {
+            searchResult = "/srch/jn/" + query;
+        }
+
+        dictSite = Jsoup.connect(domainURL + searchResult).get();
+    }
+
+    /**
+     * Parses the search results page.
+     *
+     * @return return the results as an ArrayList<String>.
+     */
+
+    private ArrayList<String> parseSearchResults() throws IOException {
+        Document searchResultPage = Jsoup.connect(domainURL + "/srch/jn/" + contentURL).get();
+        ArrayList<String> links = new ArrayList<>();
+
+        Elements searchResults = searchResultPage.getElementsByClass("content_list idiom lsize");
+
+        if (!searchResults.isEmpty()) {
+            searchResults = searchResults.get(0).getElementsByTag("li");
+        } else {
+            return null;
+        }
+
+        for (Element e : searchResults) {
+            links.add(e.getElementsByTag("a").get(0).attr("href"));
+        }
+
+        return links;
     }
 
     /**

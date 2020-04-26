@@ -12,15 +12,15 @@ public class DictParseTest {
     @BeforeClass
     public static void setUp() throws Exception {
         // Basic URL for the dictionary.
-        String url = "https://dictionary.goo.ne.jp/word/";
+        String mode = "/m0u/";
 
         // Dictionary entry for the word "猫" as in "cat".
-        parserBasic = new DictParse(url + "猫");
+        parserBasic = new DictParse( "猫" + mode);
 
         // Dictionary entry for the word "ふらふら" as in "staggering" or "wandering".
         // This is important to test because this word doesn't have a kanji form.
         // Simply put, the word and the reading of the word are the exact same.
-        parserNoKanji = new DictParse(url + "ふらふら");
+        parserNoKanji = new DictParse("ふらふら" + mode);
     }
 
     @Test

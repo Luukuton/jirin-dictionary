@@ -34,6 +34,6 @@ public class JirinServiceTest {
     @Test
     public void equalWhenReturnsCorrectExceptionForWordNotFound() {
         jirin.queryDict("-");
-        assertEquals("Word not found.", jirin.getException());
+        assertEquals("No results.", jirin.getException());
     }
 }

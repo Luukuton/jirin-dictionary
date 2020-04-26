@@ -15,13 +15,13 @@ public class JirinService {
     private String exception;
 
     /**
-     * queries the word from goo dictionary.
+     * Queries the word from the dictionary with the help of the DictParse.
      *
      * @return return results as DictEntry object or null if unsuccessful.
      */
 
     public DictEntry queryDict(String input) {
-        String url = "https://dictionary.goo.ne.jp/word/";
+        String mode = "/m0u/";
         exception = "Search term cannot be nothing.";
 
         if (input.length() == 0) {
@@ -29,14 +29,14 @@ public class JirinService {
         }
 
         try {
-            DictParse parser = new DictParse(url + input);
+            DictParse parser = new DictParse(input + mode);
             return new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseMeaning());
         } catch (UnknownHostException e) {
             exception = "Please check your internet connection.";
         } catch (SocketTimeoutException e) {
             exception = "Server took too long to respond.";
-        } catch (HttpStatusException e) {
-            exception = "Word not found.";
+        } catch (HttpStatusException | IndexOutOfBoundsException e) {
+            exception = "No results.";
         } catch (IOException e) {
             exception = "Unknown error.";
         }
