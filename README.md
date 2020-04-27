@@ -20,6 +20,11 @@ The application can be run with:
 mvn compile exec:java -Dexec.mainClass=fi.luukuton.jirin.Main
 ```
 
+On Linux, if inputting Japanese directly to the search bar doesn't work, run this instead. In compiled builds, this is set by default.
+```
+mvn compile exec:java -Dexec.mainClass=fi.luukuton.jirin.Main -Djdk.gtk.version=2
+```
+
 ## Testing
 
 Tests are performed with: 
@@ -27,6 +32,7 @@ Tests are performed with:
 ```
 mvn test
 ```
+Tests require an internet connection as they utlizie the online dictionary Goo.
 
 Code coverage is created with: 
 
