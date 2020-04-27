@@ -20,4 +20,5 @@
 | 04.26 | 2   | refactored how the DictParse searches words and added search modes |
 | 04.26 | ½   | changed project package structure, improved JavaDocs and updated documentation |
 | 04.27 | ½   | debugged and fixed why directly inputting Japanese to the search bar on Linux, didn't work |
-**TOTAL: 26,5 hours**
+| 04.27 | 1   | betterments to themes (eg. scroll bar) and to the code |
+**TOTAL: 27,5 hours**

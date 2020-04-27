@@ -24,7 +24,7 @@ public class JirinUI extends Application {
     private Button searchBtn, settingsBtn, favoritesBtn;
     private GridPane header, content;
     private ComboBox<String> modeChoice;
-    private Font searchFont, contentFont;
+    private Font searchFont, headerFont, contentFont;
     private Hyperlink sourceLink;
     private Settings settings;
     private Stage settingsStage;
@@ -56,7 +56,6 @@ public class JirinUI extends Application {
         // Search bar & buttons
         searchField = new TextField();
         searchField.setPromptText("Search here..");
-        // searchField.setPrefWidth(960);
         var helpText = new TextField("Examples: 猫, 楽観, 聞く. As in 'cat', 'optimism', 'to hear'.");
         modeChoice = new ComboBox<>(FXCollections.observableArrayList("Exact", "Forward", "Backward"));
         modeChoice.getSelectionModel().select("Exact");
@@ -64,18 +63,20 @@ public class JirinUI extends Application {
         createButtons();
 
         // Results
-        ScrollPane resultsMeaningArea = new ScrollPane();
         error = new TextField();
+
         resultsHeader = new TextField();
+
         resultsMeaning = new TextArea();
         resultsMeaning.setPrefSize(960, 300);
         resultsMeaning.setWrapText(true);
+        ScrollPane resultsMeaningArea = new ScrollPane();
         resultsMeaningArea.setContent(resultsMeaning);
 
         sourceLink = new Hyperlink();
         sourceLink.setDisable(true);
 
-        // Styling and fonts
+        // CSS
         themeSwitch(settings.getTheme());
 
         layout.getStylesheets().add(
@@ -86,23 +87,28 @@ public class JirinUI extends Application {
                 Objects.requireNonNull(JirinUI.class.getClassLoader().getResource("style.css")).toExternalForm()
         );
 
+        content.getStylesheets().add(
+                Objects.requireNonNull(JirinUI.class.getClassLoader().getResource("scroll.css")).toExternalForm()
+        );
+
+        // Fonts
         searchFont = fontSet(settings.getSearchFont(), 40);
+        headerFont = fontSet(settings.getContentFont(), 30);
         contentFont = fontSet(settings.getContentFont(), 25);
 
-        header.getStyleClass().add("header");
-        header.getStyleClass().add("general-style");
-        content.getStyleClass().add("general-style");
-
-        resultsMeaning.getStyleClass().add("copyable-area");
-        resultsMeaning.setEditable(false);
-        resultsMeaning.setFont(contentFont);
-
-        setFieldStyles(contentFont, resultsHeader, error, helpText);
-
+        helpText.setFont(contentFont);
+        error.setFont(contentFont);
         searchField.setFont(searchFont);
-
-        sourceLink.getStyleClass().addAll("hyperlink");
+        resultsHeader.setFont(headerFont);
+        resultsMeaning.setFont(contentFont);
         sourceLink.setFont(contentFont);
+
+        // Styles
+        header.getStyleClass().addAll("general-style", "header");
+        content.getStyleClass().add("general-style");
+        sourceLink.getStyleClass().add("hyperlink");
+
+        setFieldStyles(resultsMeaning, resultsHeader, error, helpText);
 
         // Do not focus on anything at app launch.
         helpText.setFocusTraversable(false);
@@ -142,7 +148,7 @@ public class JirinUI extends Application {
             System.exit(0);
         });
 
-        // Scaling
+        // Scaling GridPane elements while resizing window
         RowConstraints
                 r1 = new RowConstraints(),
                 r2 = new RowConstraints(),
@@ -157,7 +163,7 @@ public class JirinUI extends Application {
         c1.setPercentWidth(80);
 
         content.getRowConstraints().addAll(r1, r2, r3, r4);
-        content.getColumnConstraints().addAll(c1);
+        content.getColumnConstraints().add(c1);
 
         // Layout
         int row = 0;
@@ -225,12 +231,14 @@ public class JirinUI extends Application {
         }
     }
 
-    private void setFieldStyles(Font font, TextField... fields) {
+    private void setFieldStyles(TextArea area, TextField... fields) {
+        area.getStyleClass().add("copyable-area");
+        area.setEditable(false);
+
         for (TextField f : fields) {
             f.getStyleClass().add("copyable-label");
             f.getStyleClass().add("general-style");
             f.setEditable(false);
-            f.setFont(font);
         }
     }
 

@@ -14,7 +14,7 @@ public class JirinServiceTest {
     @Before
     public void setUp() {
         jirin = new JirinService();
-        mode = "m0u";
+        mode = "m1u";
     }
 
     @Test

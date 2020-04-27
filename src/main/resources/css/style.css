@@ -5,25 +5,42 @@
 
 .dark {
     -bg-color: #262626;
+    -bg-color2: #313131;
+    -element-color: #525252;
     -font-color: whitesmoke;
     -link-color: #7092f3;
 }
 
 .light {
     -bg-color: whitesmoke;
+    -bg-color2: #c9c9c9;
+    -element-color: #5c5c5c;
     -font-color: #333333;
     -link-color: #193486;
 }
 
+/* General */
 .general-style {
     -fx-background-color: -bg-color;
     -fx-border-color: -bg-color;
     -fx-text-fill: -font-color;
 }
+
 .general-style .content {
-    -fx-background-radius: 0 ;
+    -fx-background-radius: 0;
 }
 
+.header {
+    -fx-font-family: "Noto Sans JP";
+    -fx-font-size: 18px;
+}
+
+.settings {
+    -fx-font-family: "Noto Sans JP";
+    -fx-font-size: 15px;
+}
+
+/* Text areas & labels*/
 .copyable-label, .copyable-label:focused {
     -fx-background-color: transparent;
     -fx-background-insets: 0px;
@@ -37,6 +54,7 @@
     -fx-text-fill: -font-color;
 }
 
+/* Buttons & links */
 .button {
     -icon-paint: #303030;
     -fx-content-display: graphic-only;
@@ -107,14 +125,4 @@
     -fx-max-height: -size;
     -fx-max-width: -size;
     -fx-shape: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z";
-}
-
-.settings {
-    -fx-font-family: "Noto Sans JP";
-    -fx-font-size: 15px;
-}
-
-.header {
-    -fx-font-family: "Noto Sans JP";
-    -fx-font-size: 18px;
 }

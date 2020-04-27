@@ -1,0 +1,39 @@
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow{
+    -fx-padding: 0.1em 0;
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow{
+    -fx-padding: 0 0em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -element-color;
+    -fx-background-insets: 1px, 0, 0;
+    -fx-background-radius: 2em;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: -element-color;
+    -fx-background-insets: 1px, 0, 0;
+    -fx-background-radius: 1em;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: -bg-color2;
+    -fx-border-color: -bg-color2;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -element-color;
+    -fx-background-radius: 5em;
+}
