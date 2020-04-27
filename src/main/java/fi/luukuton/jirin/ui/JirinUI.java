@@ -329,6 +329,7 @@ public class JirinUI extends Application {
         saveBtn.setOnAction(e -> {
             themeSwitch(themeChoice.getValue());
             searchFont = fontSet(searchFontChoice.getValue(), 40);
+            headerFont = fontSet(settings.getContentFont(), 30);
             contentFont = fontSet(contentFontChoice.getValue(), 25);
 
             try {
