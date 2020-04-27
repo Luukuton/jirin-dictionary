@@ -7,13 +7,11 @@ import fi.luukuton.jirin.dao.Settings;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.control.*;
-import javafx.scene.layout.Region;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,12 +22,12 @@ import java.util.Objects;
 
 public class JirinUI extends Application {
     private Button searchBtn, settingsBtn, favoritesBtn;
-    private GridPane header;
-    private GridPane content;
+    private GridPane header, content;
     private ComboBox<String> modeChoice;
     private Font searchFont, contentFont;
     private Hyperlink sourceLink;
     private Settings settings;
+    private Stage settingsStage;
     private String sourceURL;
     private TextField searchField, resultsHeader, error;
     private TextArea resultsMeaning;
@@ -41,23 +39,24 @@ public class JirinUI extends Application {
         settings = new Settings("settings.properties");
 
         // Basic UI settings
-        var layout = new BorderPane();
+        var layout = new VBox();
         content = new GridPane();
         header = new GridPane();
 
+        content.setMinHeight(100);
+        content.setAlignment(Pos.TOP_CENTER);
         content.setPadding(new Insets(10));
-        content.setAlignment(Pos.CENTER);
-        content.setVgap(10);
+        content.setVgap(5);
         content.setHgap(5);
 
         header.setPadding(new Insets(10));
-        header.setVgap(10);
+        header.setVgap(5);
         header.setHgap(5);
 
         // Search bar & buttons
         searchField = new TextField();
         searchField.setPromptText("Search here..");
-        searchField.setPrefWidth(960);
+        // searchField.setPrefWidth(960);
         var helpText = new TextField("Examples: 猫, 楽観, 聞く. As in 'cat', 'optimism', 'to hear'.");
         modeChoice = new ComboBox<>(FXCollections.observableArrayList("Exact", "Forward", "Backward"));
         modeChoice.getSelectionModel().select("Exact");
@@ -120,14 +119,19 @@ public class JirinUI extends Application {
             }
         });
 
-        searchBtn.setOnAction(arg0 -> {
+        searchBtn.setOnAction(e -> {
             JirinService jirinService = new JirinService();
             showSearchResults(jirinService);
         });
 
-        settingsBtn.setOnAction(e -> spawnSettings());
+        settingsBtn.setOnAction(e -> {
+            if (settingsStage != null) {
+                settingsStage.close();
+            }
+            spawnSettings();
+        });
 
-        sourceLink.setOnAction(arg0 -> {
+        sourceLink.setOnAction(e -> {
             HostServices services = getHostServices();
             services.showDocument(sourceURL);
         });
@@ -137,6 +141,23 @@ public class JirinUI extends Application {
             Platform.exit();
             System.exit(0);
         });
+
+        // Scaling
+        RowConstraints
+                r1 = new RowConstraints(),
+                r2 = new RowConstraints(),
+                r3 = new RowConstraints(),
+                r4 = new RowConstraints();
+
+        ColumnConstraints c1 = new ColumnConstraints();
+
+        r4.setMinHeight(100);
+        r4.setPrefHeight(Integer.MAX_VALUE);
+
+        c1.setPercentWidth(80);
+
+        content.getRowConstraints().addAll(r1, r2, r3, r4);
+        content.getColumnConstraints().addAll(c1);
 
         // Layout
         int row = 0;
@@ -152,15 +173,16 @@ public class JirinUI extends Application {
         content.add(resultsHeader,  0, row);
         content.add(resultsMeaning, 0, ++row);
 
-        layout.setTop(header);
-        layout.setCenter(content);
+        VBox.setVgrow(header, Priority.NEVER);
+        VBox.setVgrow(content, Priority.ALWAYS);
+        layout.getChildren().addAll(header, content);
 
         var scene = new Scene(layout, 1280, 720);
 
         // Unfocus out of any element when clicking anywhere.
-        scene.setOnMousePressed(event -> content.requestFocus());
+        scene.setOnMousePressed(e -> content.requestFocus());
 
-        stage.setMinHeight(400);
+        stage.setMinHeight(450);
         stage.setMinWidth(800);
         stage.setTitle("Jirin");
         stage.setScene(scene);
@@ -236,7 +258,7 @@ public class JirinUI extends Application {
     }
 
     private void spawnSettings() {
-        var stage = new Stage();
+        settingsStage = new Stage();
         var settingsContent = new GridPane();
         var scene = new Scene(settingsContent);
 
@@ -310,10 +332,10 @@ public class JirinUI extends Application {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            stage.close();
+            settingsStage.close();
         });
 
-        cancelBtn.setOnAction(e -> stage.close());
+        cancelBtn.setOnAction(e -> settingsStage.close());
 
         int row = 0;
         settingsContent.add(themeLabel,        0, row);
@@ -326,12 +348,14 @@ public class JirinUI extends Application {
         settingsContent.add(saveBtn,           0, ++row);
         settingsContent.add(cancelBtn,         1, row);
 
-        scene.setOnMousePressed(event -> settingsContent.requestFocus());
-        stage.setMinWidth(350);
-        stage.setMinHeight(250);
-        stage.setTitle("Jirin | Settings");
-        stage.setScene(scene);
-        stage.show();
+        scene.setOnMousePressed(e -> settingsContent.requestFocus());
+        settingsStage.setMinWidth(350);
+        settingsStage.setMinHeight(275);
+        settingsStage.setMaxWidth(350);
+        settingsStage.setMaxHeight(275);
+        settingsStage.setTitle("Jirin | Settings");
+        settingsStage.setScene(scene);
+        settingsStage.show();
     }
 
     private void themeSwitch(String theme) {
