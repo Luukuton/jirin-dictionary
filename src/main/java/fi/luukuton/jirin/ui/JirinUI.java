@@ -322,8 +322,8 @@ public class JirinUI extends Application {
         cancelBtn.setGraphic(cancelBtnRegion);
 
         themeLabel.setText("Theme");
-        searchFontLabel.setText("Font (search)");
-        contentFontLabel.setText("Font (content)");
+        searchFontLabel.setText("Search font");
+        contentFontLabel.setText("Content font");
         notice.setText("Restarting the app is required \nto apply any font changes.");
 
         var themeChoice = new ComboBox<>(FXCollections.observableArrayList(
@@ -389,9 +389,9 @@ public class JirinUI extends Application {
         settingsContent.add(cancelBtn,         1, row);
 
         scene.setOnMousePressed(e -> settingsContent.requestFocus());
-        settingsStage.setMinWidth(350);
+        settingsStage.setMinWidth(400);
         settingsStage.setMinHeight(275);
-        settingsStage.setMaxWidth(350);
+        settingsStage.setMaxWidth(400);
         settingsStage.setMaxHeight(275);
         settingsStage.setTitle("Jirin | Settings");
         settingsStage.getIcons().add(new Image("jirin_icon.png"));
