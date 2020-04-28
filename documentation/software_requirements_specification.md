@@ -6,7 +6,7 @@ With this application, users can search Japanese definitions for Japanese words 
 The application features a single (responsive) main view, where users can search for words. Additionally, there's a settings view, where users can change some basic settings such as theme and fonts.
 
 Interface currently: 
-![current_ui](current_ui.gif)
+![current_ui](pictures/current_ui.gif)
 
 ## Functionality
 - [x] Clean UI

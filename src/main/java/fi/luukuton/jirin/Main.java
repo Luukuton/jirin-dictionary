@@ -14,7 +14,7 @@ public class Main {
         File file = new File("settings.properties");
         if (file.createNewFile()) {
             Settings settings = new Settings("settings.properties");
-            settings.saveSettings("M Plus 1p", "M Plus 1p", "light");
+            settings.saveSettings("M Plus 1p", "M Plus 1p", "dark");
         }
 
         JirinUI.main(args);
