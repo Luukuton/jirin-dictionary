@@ -5,7 +5,7 @@ Current state of the UI:
 ![current_ui](documentation/pictures/current_ui.gif)
 
 ## Releases
-Latest: [Week 5](https://github.com/Luukuton/ot-harjoitustyo-hy2020/releases/tag/week5)
+Latest: [Week 6](https://github.com/Luukuton/ot-harjoitustyo-hy2020/releases/tag/week6)
 
 ## Documentation
 - [Software requirements specifications](documentation/software_requirements_specification.md)

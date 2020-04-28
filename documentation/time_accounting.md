@@ -21,4 +21,6 @@
 | 04.26 | ½   | changed project package structure, improved JavaDocs and updated documentation |
 | 04.27 | ½   | debugged and fixed why directly inputting Japanese to the search bar on Linux, didn't work |
 | 04.27 | 1   | betterments to themes (eg. scroll bar) and to the code |
-**TOTAL: 27,5 hours**
+| 04.28 | 1   | JavaDoc and documentation |
+| 04.28 | 2   | Tests for settings, app icon and minor fixes |
+**TOTAL: 30,5 hours**
