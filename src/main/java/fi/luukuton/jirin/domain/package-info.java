@@ -1,5 +1,5 @@
 /**
- * The application logic
+ * Application logic
  */
 
 package fi.luukuton.jirin.domain;

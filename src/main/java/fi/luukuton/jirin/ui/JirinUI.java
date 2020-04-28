@@ -1,21 +1,22 @@
 package fi.luukuton.jirin.ui;
 
-import javafx.application.HostServices;
 import fi.luukuton.jirin.domain.JirinService;
 import fi.luukuton.jirin.domain.DictEntry;
 import fi.luukuton.jirin.dao.Settings;
 
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.application.Platform;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.collections.FXCollections;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.collections.FXCollections;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -199,6 +200,7 @@ public class JirinUI extends Application {
         stage.setMinHeight(450);
         stage.setMinWidth(800);
         stage.setTitle("Jirin");
+        stage.getIcons().add(new Image("jirin_icon.png"));
         stage.setScene(scene);
         stage.show();
     }
@@ -392,6 +394,7 @@ public class JirinUI extends Application {
         settingsStage.setMaxWidth(350);
         settingsStage.setMaxHeight(275);
         settingsStage.setTitle("Jirin | Settings");
+        settingsStage.getIcons().add(new Image("jirin_icon.png"));
         settingsStage.setScene(scene);
         settingsStage.show();
     }

@@ -149,6 +149,7 @@
             </plugin>
         </plugins>
         <resources>
+            <resource><directory>src/main/resources/img</directory></resource>
             <resource><directory>src/main/resources/font</directory></resource>
             <resource><directory>src/main/resources/css</directory></resource>
         </resources>
