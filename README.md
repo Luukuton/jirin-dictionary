@@ -5,12 +5,14 @@ Current state of the UI:
 ![current_ui](documentation/pictures/current_ui.gif)
 
 ## Releases
-Latest: [Week 6](https://github.com/Luukuton/ot-harjoitustyo-hy2020/releases/tag/week6)
+* [Week 6 (latest)](https://github.com/Luukuton/ot-harjoitustyo-hy2020/releases/tag/week6)
+* [Week 5](https://github.com/Luukuton/ot-harjoitustyo-hy2020/releases/tag/week5)
 
 ## Documentation
-- [Software requirements specifications](documentation/software_requirements_specification.md)
-- [Architecture](documentation/architecture.md)
-- [Time accounting](documentation/time_accounting.md)
+* [User guide](documentation/user_guide.md)
+* [Software requirements specifications](documentation/software_requirements_specification.md)
+* [Architecture](documentation/architecture.md)
+* [Time accounting](documentation/time_accounting.md)
 
 ## Running
 
