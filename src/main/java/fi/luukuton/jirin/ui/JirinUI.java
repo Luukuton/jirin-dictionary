@@ -20,6 +20,10 @@ import javafx.collections.FXCollections;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * A class for the application GUI.
+ */
+
 public class JirinUI extends Application {
     private Button searchBtn, settingsBtn, favoritesBtn;
     private GridPane header, content;
@@ -31,6 +35,10 @@ public class JirinUI extends Application {
     private String sourceURL;
     private TextField searchField, resultsHeader, error;
     private TextArea resultsMeaning;
+
+    /**
+     * The main window of the application.
+     */
 
     private void initUI(Stage stage) throws IOException {
 
@@ -108,7 +116,7 @@ public class JirinUI extends Application {
         content.getStyleClass().add("general-style");
         sourceLink.getStyleClass().add("hyperlink");
 
-        setFieldStyles(resultsMeaning, resultsHeader, error, helpText);
+        setInputFieldStyles(resultsMeaning, resultsHeader, error, helpText);
 
         // Do not focus on anything at app launch.
         helpText.setFocusTraversable(false);
@@ -195,6 +203,12 @@ public class JirinUI extends Application {
         stage.show();
     }
 
+    /**
+     * Updates search results for the user input in the search field.
+     *
+     * @param service parsing logic
+     */
+
     private void showSearchResults(JirinService service) {
         String searchInput = searchField.getText();
         String mode = modeChoice.getValue();
@@ -231,7 +245,14 @@ public class JirinUI extends Application {
         }
     }
 
-    private void setFieldStyles(TextArea area, TextField... fields) {
+    /**
+     * Sets styling for text input fields and them to be non-editable.
+     *
+     * @param area text area for meanings
+     * @param fields other text fields
+     */
+
+    private void setInputFieldStyles(TextArea area, TextField... fields) {
         area.getStyleClass().add("copyable-area");
         area.setEditable(false);
 
@@ -241,6 +262,10 @@ public class JirinUI extends Application {
             f.setEditable(false);
         }
     }
+
+    /**
+     * Creates clickable buttons to the main window.
+     */
 
     private void createButtons() {
         searchBtn = new Button();
@@ -264,6 +289,10 @@ public class JirinUI extends Application {
         favoritesBtnRegion.setId("favorites-icon");
         favoritesBtn.setGraphic(favoritesBtnRegion);
     }
+
+    /**
+     * The settings window.
+     */
 
     private void spawnSettings() {
         settingsStage = new Stage();
@@ -367,6 +396,12 @@ public class JirinUI extends Application {
         settingsStage.show();
     }
 
+    /**
+     * Switch themes between light and dark.
+     *
+     * @param theme theme name
+     */
+
     private void themeSwitch(String theme) {
         if (theme.toLowerCase().equals("light")) {
             header.getStyleClass().add("light");
@@ -380,6 +415,13 @@ public class JirinUI extends Application {
             content.getStyleClass().remove("light");
         }
     }
+
+    /**
+     * Sets font with desired size.
+     *
+     * @param fontName font name
+     * @param size size of the font or text size
+     */
 
     private Font fontSet(String fontName, int size) {
         if (fontName.toLowerCase().equals("noto serif jp")) {
