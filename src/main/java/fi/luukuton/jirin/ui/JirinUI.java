@@ -19,6 +19,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -26,7 +27,9 @@ import java.util.Objects;
  */
 
 public class JirinUI extends Application {
-    private Button searchBtn, settingsBtn, favoritesBtn;
+    private int currentIndex;
+    private ArrayList<DictEntry> entries;
+    private Button searchBtn, settingsBtn, forwardBtn, backwardBtn;
     private GridPane header, content;
     private ComboBox<String> modeChoice;
     private Font searchFont, headerFont, contentFont;
@@ -124,19 +127,18 @@ public class JirinUI extends Application {
         searchField.setFocusTraversable(false);
         searchBtn.setFocusTraversable(false);
         settingsBtn.setFocusTraversable(false);
-        favoritesBtn.setFocusTraversable(false);
 
         // Actions
         searchField.setOnKeyPressed(key -> {
             if (key.getCode().equals(KeyCode.ENTER)) {
                 JirinService jirinService = new JirinService();
-                showSearchResults(jirinService);
+                fetchSearchResults(jirinService);
             }
         });
 
         searchBtn.setOnAction(e -> {
             JirinService jirinService = new JirinService();
-            showSearchResults(jirinService);
+            fetchSearchResults(jirinService);
         });
 
         settingsBtn.setOnAction(e -> {
@@ -177,9 +179,8 @@ public class JirinUI extends Application {
         // Layout
         int row = 0;
         header.add(settingsBtn,     0, row);
-        header.add(favoritesBtn,    1, row);
-        header.add(modeChoice,      7, row);
-        header.add(sourceLink,      8, row);
+        header.add(modeChoice,      11, row);
+        header.add(sourceLink,      12, row);
 
         content.add(helpText,       0, row);
         content.add(searchField,    0, ++row);
@@ -211,7 +212,7 @@ public class JirinUI extends Application {
      * @param service parsing logic
      */
 
-    private void showSearchResults(JirinService service) {
+    private void fetchSearchResults(JirinService service) {
         String searchInput = searchField.getText();
         String mode = modeChoice.getValue();
         if (mode.equals("Forward")) {
@@ -222,74 +223,76 @@ public class JirinUI extends Application {
             mode = "m1u";
         }
 
-        DictEntry entry = service.queryDict(searchInput, mode);
+        entries = null;
+        entries = service.queryDict(searchInput, mode);
 
-        if (entry == null) {
+        if (entries == null) {
             resultsHeader.setText("");
             resultsMeaning.setText("");
             sourceLink.setText("");
             sourceLink.setDisable(true);
             error.setText(service.getException());
+            content.getChildren().remove(forwardBtn);
+            content.getChildren().remove(backwardBtn);
         } else {
-            error.setText("");
-            sourceLink.setDisable(false);
-            sourceURL = "https://dictionary.goo.ne.jp/word/" + entry.hexEncodeWord();
-            sourceLink.setText("Source for the word");
-            resultsHeader.setText("【" + entry.getWord() + "】" + entry.getReading());
+            currentIndex = 0;
+            showSearchResult(currentIndex);
 
-            String meaningFormatted = "";
-            for (String m : entry.getMeanings()) {
-                meaningFormatted = meaningFormatted.concat(m + "\n\n");
+            if (entries.size() > 1) {
+                forwardBtn = new Button();
+                backwardBtn = new Button();
+
+                forwardBtn.setPrefSize(30, 30);
+                forwardBtn.getStyleClass().add("button");
+                Region forwardBtnRegion = new Region();
+                forwardBtnRegion.setId("forward-icon");
+                forwardBtn.setGraphic(forwardBtnRegion);
+
+                backwardBtn.setPrefSize(30, 30);
+                backwardBtn.getStyleClass().add("button");
+                Region backwardBtnRegion = new Region();
+                backwardBtnRegion.setId("backward-icon");
+                backwardBtn.setGraphic(backwardBtnRegion);
+
+                content.add(backwardBtn,  0, 4);
+                content.add(forwardBtn,  1, 4);
+
+                forwardBtn.setOnAction(e -> {
+                    currentIndex = (currentIndex < entries.size() - 1) ? currentIndex + 1 : 0;
+                    showSearchResult(currentIndex);
+                });
+
+                backwardBtn.setOnAction(e -> {
+                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : entries.size() - 1;
+                    showSearchResult(currentIndex);
+                });
+            } else {
+                content.getChildren().remove(forwardBtn);
+                content.getChildren().remove(backwardBtn);
             }
-
-            // Remove new lines from the last entry.
-            resultsMeaning.setText(meaningFormatted.substring(0, meaningFormatted.length() - 4));
         }
     }
 
     /**
-     * Sets styling for text input fields and them to be non-editable.
+     * Show search result in main window.
      *
-     * @param area text area for meanings
-     * @param fields other text fields
+     * @param index index of the ArrayList<DictEntry> entries
      */
 
-    private void setInputFieldStyles(TextArea area, TextField... fields) {
-        area.getStyleClass().add("copyable-area");
-        area.setEditable(false);
+    private void showSearchResult(int index) {
+        error.setText("");
+        sourceLink.setDisable(false);
+        sourceURL = "https://dictionary.goo.ne.jp/word/" + entries.get(index).hexEncodeWord();
+        sourceLink.setText("Source for the word");
+        resultsHeader.setText("【" + entries.get(index).getWord() + "】" + entries.get(index).getReading());
 
-        for (TextField f : fields) {
-            f.getStyleClass().add("copyable-label");
-            f.getStyleClass().add("general-style");
-            f.setEditable(false);
+        String meaningFormatted = "";
+        for (String m : entries.get(index).getMeanings()) {
+            meaningFormatted = meaningFormatted.concat(m + "\n\n");
         }
-    }
 
-    /**
-     * Creates clickable buttons to the main window.
-     */
-
-    private void createButtons() {
-        searchBtn = new Button();
-        searchBtn.setPrefSize(50, 85);
-        searchBtn.getStyleClass().add("button");
-        Region searchBtnRegion = new Region();
-        searchBtnRegion.setId("search-icon");
-        searchBtn.setGraphic(searchBtnRegion);
-
-        settingsBtn = new Button();
-        settingsBtn.setPrefSize(40, 40);
-        settingsBtn.getStyleClass().add("button");
-        Region settingsBtnRegion = new Region();
-        settingsBtnRegion.setId("settings-icon");
-        settingsBtn.setGraphic(settingsBtnRegion);
-
-        favoritesBtn = new Button();
-        favoritesBtn.setPrefSize(40, 40);
-        favoritesBtn.getStyleClass().add("button");
-        Region favoritesBtnRegion = new Region();
-        favoritesBtnRegion.setId("favorites-icon");
-        favoritesBtn.setGraphic(favoritesBtnRegion);
+        // Remove new lines from the last entry.
+        resultsMeaning.setText(meaningFormatted.substring(0, meaningFormatted.length() - 4));
     }
 
     /**
@@ -417,6 +420,44 @@ public class JirinUI extends Application {
             header.getStyleClass().remove("light");
             content.getStyleClass().remove("light");
         }
+    }
+
+    /**
+     * Sets styling for text input fields and them to be non-editable.
+     *
+     * @param area text area for meanings
+     * @param fields other text fields
+     */
+
+    private void setInputFieldStyles(TextArea area, TextField... fields) {
+        area.getStyleClass().add("copyable-area");
+        area.setEditable(false);
+
+        for (TextField f : fields) {
+            f.getStyleClass().add("copyable-label");
+            f.getStyleClass().add("general-style");
+            f.setEditable(false);
+        }
+    }
+
+    /**
+     * Creates clickable buttons to the main window.
+     */
+
+    private void createButtons() {
+        searchBtn = new Button();
+        searchBtn.setPrefSize(50, 85);
+        searchBtn.getStyleClass().add("button");
+        Region searchBtnRegion = new Region();
+        searchBtnRegion.setId("search-icon");
+        searchBtn.setGraphic(searchBtnRegion);
+
+        settingsBtn = new Button();
+        settingsBtn.setPrefSize(40, 40);
+        settingsBtn.getStyleClass().add("button");
+        Region settingsBtnRegion = new Region();
+        settingsBtnRegion.setId("settings-icon");
+        settingsBtn.setGraphic(settingsBtnRegion);
     }
 
     /**

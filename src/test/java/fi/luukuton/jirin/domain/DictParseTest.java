@@ -15,12 +15,12 @@ public class DictParseTest {
         String mode = "/m0u/";
 
         // Dictionary entry for the word "猫" as in "cat".
-        parserBasic = new DictParse( "猫" + mode);
+        parserBasic = new DictParse( "/word/%E7%8C%AB");
 
         // Dictionary entry for the word "ふらふら" as in "staggering" or "wandering".
         // This is important to test because this word doesn't have a kanji form.
         // Simply put, the word and the reading of the word are the exact same.
-        parserNoKanji = new DictParse("ふらふら" + mode);
+        parserNoKanji = new DictParse("/word/%E3%81%B5%E3%82%89%E3%81%B5%E3%82%89");
     }
 
     @Test

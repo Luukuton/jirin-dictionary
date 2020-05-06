@@ -8,10 +8,12 @@ Functionality is managed by JirinService and DictParse classes and the main data
 DictEntry is a class for one word, its reading and its meanings. The class also has the ability to convert the word to a hex for URLs.
 
 ### JirinService 
-JirinService acts like a bridge between the UI and the main functionality class DictParse. It also returns any errors occured during the parsing.
+JirinService acts like a bridge between the UI and the main functionality class DictParse. It parses search results page (https://dictionary.goo.ne.jp/srch/jn/楽観/m0u) and passes found links (https://dictionary.goo.ne.jp/word/楽観/) to DictParse.
+ 
+It also returns any errors occured during the parsing.
 
 ### DictParse
-DictParse includes the core functionality of this application. It is responsible of parsing this free online Japanese to Japanese dictionary website: https://dictionary.goo.ne.jp/. 
+DictParse includes the core functionality of this application. It is responsible for parsing this free online Japanese to Japanese dictionary website: https://dictionary.goo.ne.jp/. 
 
 More specifically it takes the user input and selected mode, which are passed by the JirinService class, and loads the website for the search results: `https://dictionary.goo.ne.jp/srch/jn/<word>/<mode>`.
 * Word examples: 

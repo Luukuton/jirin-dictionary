@@ -19,6 +19,19 @@ Application launches to this view:
 
 Search queries can be made by typing into the search bar and pressing enter or clicking the magnifier. Search mode can be changed by selecting one from the list.
 
+There are three different search modes: 
+* Exact
+  * Query is this exact string typed into the search bar.
+  * For example when searching '走る', it'll only match '走る'.
+* Forward
+  * Query begins with these characters. 
+  * For example when searching '疑', it'll match '疑問', '疑念', '疑惑' etc.
+  * In regex it'd be `/疑.*/`.
+* Backward
+  * Query ends with these characters. 
+  * For example when searching '気', it'll match '空気', '元気', '天気' etc.
+  * In regex it'd be `/.*気/`.
+
 ![search results](pictures/search_results.png)
 
 Settings view: 

@@ -23,4 +23,5 @@
 | 04.27 | 1   | betterments to themes (eg. scroll bar) and to the code |
 | 04.28 | 1   | JavaDoc and documentation |
 | 04.28 | 2   | Tests for settings, app icon and minor fixes |
-**TOTAL: 30,5 hours**
+| 05.06 | 3   | added support for multiple search results and updated documentation |
+**TOTAL: 33,5 hours**

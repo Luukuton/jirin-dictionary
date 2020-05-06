@@ -29,7 +29,7 @@ Tests are performed with:
 ```
 mvn test
 ```
-Tests require an internet connection as they utlizie the online dictionary Goo.
+Tests require an internet connection as they utilize the online dictionary Goo.
 
 Code coverage is created with: 
 
