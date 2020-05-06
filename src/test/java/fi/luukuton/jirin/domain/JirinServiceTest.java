@@ -17,9 +17,15 @@ public class JirinServiceTest {
         mode = "m1u";
     }
 
+    // This search term (読む) returns only one result.
     @Test
-    public void returnsCorrectLinks() {
+    public void returnsCorrectLinksOnSingleResult() {
         assertEquals(jirin.queryDict("読む", mode).get(0).getWord(), "読む");
+    }
+
+    // This search term (鳥) returns multiple results.
+    @Test
+    public void returnsCorrectLinksOnMultipleResults() {
         assertEquals(jirin.queryDict("鳥", mode).get(0).getWord(), "鳥");
     }
 
