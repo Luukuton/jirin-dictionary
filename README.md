@@ -2,7 +2,7 @@
 A Java application for searching and parsing online monolingual Japanese dictionaries. Initially support only for [goo辞典](https://dictionary.goo.ne.jp/). The name comes from the lesser used Japanese word for dictionary, 辞林.
 
 Current state of the UI:  
-![current_ui](documentation/pictures/current_ui.gif)
+![current_ui](documentation/pictures/ui_preview.gif)
 
 ## Releases
 * [Week 6 (latest)](https://github.com/Luukuton/ot-harjoitustyo-hy2020/releases/tag/week6)
@@ -24,14 +24,14 @@ mvn compile exec:java -Dexec.mainClass=fi.luukuton.jirin.Main
 
 ## Testing
 
-Tests are performed with: 
+Tests can be performed with: 
 
 ```
 mvn test
 ```
 Tests require an internet connection as they utilize the online dictionary Goo.
 
-Code coverage is created with: 
+Code coverage can be created with: 
 
 ```
 mvn jacoco:report
@@ -51,7 +51,7 @@ generates a runnable JAR file, _jirin-1.0-SNAPSHOT.jar_, to the _target_ directo
 
 ## JavaDoc
 
-JavaDoc files are created with: 
+JavaDoc files can be created with: 
 
 ```
 mvn javadoc:javadoc
@@ -71,6 +71,6 @@ Results can be viewed by opening _target/site/checkstyle.html_ in a browser.
 
 
 ## Dependencies
-* Java 11
+* Java 11+
 * Maven 
 
