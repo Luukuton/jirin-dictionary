@@ -145,7 +145,7 @@ public class JirinUI extends Application {
             if (settingsStage != null) {
                 settingsStage.close();
             }
-            spawnSettings();
+            spawnSettings(stage);
         });
 
         sourceLink.setOnAction(e -> {
@@ -291,15 +291,14 @@ public class JirinUI extends Application {
             meaningFormatted = meaningFormatted.concat(m + "\n\n");
         }
 
-        // Remove new lines from the last entry.
-        resultsMeaning.setText(meaningFormatted.substring(0, meaningFormatted.length() - 4));
+        resultsMeaning.setText(meaningFormatted);
     }
 
     /**
      * The settings window.
      */
 
-    private void spawnSettings() {
+    private void spawnSettings(Stage mainStage) {
         settingsStage = new Stage();
         var settingsContent = new GridPane();
         var scene = new Scene(settingsContent);
@@ -327,7 +326,7 @@ public class JirinUI extends Application {
         themeLabel.setText("Theme");
         searchFontLabel.setText("Search font");
         contentFontLabel.setText("Content font");
-        notice.setText("Restarting the app is required \nto apply any font changes.");
+        notice.setText("The app will restart itself \nif there are any font changes.");
 
         var themeChoice = new ComboBox<>(FXCollections.observableArrayList(
                 "Dark",
@@ -366,6 +365,12 @@ public class JirinUI extends Application {
             headerFont = fontSet(settings.getContentFont(), 30);
             contentFont = fontSet(contentFontChoice.getValue(), 25);
 
+            boolean restartRequired = false;
+            if (!settings.getContentFont().equals(contentFontChoice.getValue())
+                    || !settings.getSearchFont().equals(searchFontChoice.getValue())) {
+                restartRequired = true;
+            }
+
             try {
                 settings.saveSettings(
                         searchFontChoice.getValue(),
@@ -376,6 +381,18 @@ public class JirinUI extends Application {
                 ioException.printStackTrace();
             }
             settingsStage.close();
+
+            // Restarts main stage for font changes to apply.
+            if (restartRequired) {
+                mainStage.close();
+                Platform.runLater( () -> {
+                    try {
+                        new JirinUI().start( new Stage() );
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                });
+            }
         });
 
         cancelBtn.setOnAction(e -> settingsStage.close());
