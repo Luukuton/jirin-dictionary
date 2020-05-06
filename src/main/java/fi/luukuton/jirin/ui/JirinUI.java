@@ -132,13 +132,14 @@ public class JirinUI extends Application {
         searchField.setOnKeyPressed(key -> {
             if (key.getCode().equals(KeyCode.ENTER)) {
                 JirinService jirinService = new JirinService();
-                fetchSearchResults(jirinService);
+                new Thread( ()-> fetchSearchResults(jirinService)).start();
+
             }
         });
 
         searchBtn.setOnAction(e -> {
             JirinService jirinService = new JirinService();
-            fetchSearchResults(jirinService);
+            new Thread( ()-> fetchSearchResults(jirinService)).start();
         });
 
         settingsBtn.setOnAction(e -> {
@@ -226,51 +227,55 @@ public class JirinUI extends Application {
         entries = null;
         entries = service.queryDict(searchInput, mode);
 
-        if (entries == null) {
-            resultsHeader.setText("");
-            resultsMeaning.setText("");
-            sourceLink.setText("");
-            sourceLink.setDisable(true);
-            error.setText(service.getException());
-            content.getChildren().remove(forwardBtn);
-            content.getChildren().remove(backwardBtn);
-        } else {
-            currentIndex = 0;
-            showSearchResult(currentIndex);
-
-            if (entries.size() > 1) {
-                forwardBtn = new Button();
-                backwardBtn = new Button();
-
-                forwardBtn.setPrefSize(30, 30);
-                forwardBtn.getStyleClass().add("button");
-                Region forwardBtnRegion = new Region();
-                forwardBtnRegion.setId("forward-icon");
-                forwardBtn.setGraphic(forwardBtnRegion);
-
-                backwardBtn.setPrefSize(30, 30);
-                backwardBtn.getStyleClass().add("button");
-                Region backwardBtnRegion = new Region();
-                backwardBtnRegion.setId("backward-icon");
-                backwardBtn.setGraphic(backwardBtnRegion);
-
-                content.add(backwardBtn,  0, 4);
-                content.add(forwardBtn,  1, 4);
-
-                forwardBtn.setOnAction(e -> {
-                    currentIndex = (currentIndex < entries.size() - 1) ? currentIndex + 1 : 0;
-                    showSearchResult(currentIndex);
-                });
-
-                backwardBtn.setOnAction(e -> {
-                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : entries.size() - 1;
-                    showSearchResult(currentIndex);
-                });
-            } else {
+        // The UI cannot be directly updated from a non-application thread.
+        // It needs to be updated inside Platform.runLater as lambda.
+        Platform.runLater(() -> {
+            if (entries == null) {
+                resultsHeader.setText("");
+                resultsMeaning.setText("");
+                sourceLink.setText("");
+                sourceLink.setDisable(true);
+                error.setText(service.getException());
                 content.getChildren().remove(forwardBtn);
                 content.getChildren().remove(backwardBtn);
+            } else {
+                currentIndex = 0;
+                showSearchResult(currentIndex);
+
+                if (entries.size() > 1) {
+                    forwardBtn = new Button();
+                    backwardBtn = new Button();
+
+                    forwardBtn.setPrefSize(30, 30);
+                    forwardBtn.getStyleClass().add("button");
+                    Region forwardBtnRegion = new Region();
+                    forwardBtnRegion.setId("forward-icon");
+                    forwardBtn.setGraphic(forwardBtnRegion);
+
+                    backwardBtn.setPrefSize(30, 30);
+                    backwardBtn.getStyleClass().add("button");
+                    Region backwardBtnRegion = new Region();
+                    backwardBtnRegion.setId("backward-icon");
+                    backwardBtn.setGraphic(backwardBtnRegion);
+
+                    content.add(backwardBtn,  0, 4);
+                    content.add(forwardBtn,  1, 4);
+
+                    forwardBtn.setOnAction(e -> {
+                        currentIndex = (currentIndex < entries.size() - 1) ? currentIndex + 1 : 0;
+                        showSearchResult(currentIndex);
+                    });
+
+                    backwardBtn.setOnAction(e -> {
+                        currentIndex = (currentIndex > 0) ? currentIndex - 1 : entries.size() - 1;
+                        showSearchResult(currentIndex);
+                    });
+                } else {
+                    content.getChildren().remove(forwardBtn);
+                    content.getChildren().remove(backwardBtn);
+                }
             }
-        }
+        });
     }
 
     /**
