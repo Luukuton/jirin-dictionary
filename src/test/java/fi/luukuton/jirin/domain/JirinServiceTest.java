@@ -18,6 +18,12 @@ public class JirinServiceTest {
     }
 
     @Test
+    public void returnsCorrectLinks() {
+        assertEquals(jirin.queryDict("読む", mode).get(0).getWord(), "読む");
+        assertEquals(jirin.queryDict("鳥", mode).get(0).getWord(), "鳥");
+    }
+
+    @Test
     public void returnsNullWhenZeroLengthInput() {
         assertNull(jirin.queryDict("", mode));
     }
