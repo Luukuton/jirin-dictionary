@@ -44,11 +44,11 @@ public class JirinService {
             if (!(links == null)) {
                 for (String link : links) {
                     DictParse parser = new DictParse(link);
-                    results.add(new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseMeaning()));
+                    results.add(new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseDefinition()));
                 }
             } else {
                 DictParse parser = new DictParse("/word/" + input);
-                results.add(new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseMeaning()));
+                results.add(new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseDefinition()));
             }
 
             return results;

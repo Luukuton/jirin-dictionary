@@ -36,15 +36,15 @@ public class DictParseTest {
     }
 
     @Test
-    public void equalWhenWordMeaningsParsedCorrectly() {
+    public void equalWhenWordDefinitionsParsedCorrectly() {
         String secondDefinition = "２ 《胴を猫の皮で張るところから》三味線のこと。";
         String lastDefinition = "５ 「猫車」の略。";
-        assertEquals(secondDefinition, parserBasic.parseMeaning().get(1));
-        assertEquals(lastDefinition, parserBasic.parseMeaning().get(5));
+        assertEquals(secondDefinition, parserBasic.parseDefinition().get(1));
+        assertEquals(lastDefinition, parserBasic.parseDefinition().get(5));
 
         secondDefinition = "２ からだに力がはいらないさま。意識がはっきりしないさま。「熱でふらふらする」「ふらふらした足どり」";
         lastDefinition = "４ 態度が定まらないさま。「方針がふらふらする」";
-        assertEquals(secondDefinition, parserNoKanji.parseMeaning().get(1));
-        assertEquals(lastDefinition, parserNoKanji.parseMeaning().get(3));
+        assertEquals(secondDefinition, parserNoKanji.parseDefinition().get(1));
+        assertEquals(lastDefinition, parserNoKanji.parseDefinition().get(3));
     }
 }

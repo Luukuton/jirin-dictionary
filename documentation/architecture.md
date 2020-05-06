@@ -5,7 +5,7 @@ Functionality is managed by JirinService and DictParse classes and the main data
 ![class diagram](class_diagram.png)
 
 ### DictEntry
-DictEntry is a class for one word, its reading and its meanings. The class also has the ability to convert the word to a hex for URLs.
+DictEntry is a class for one word, its reading and its definitions. The class also has the ability to convert the word to a hex for URLs.
 
 ### JirinService 
 JirinService acts like a bridge between the UI and the main functionality class DictParse. It parses search results page (https://dictionary.goo.ne.jp/srch/jn/楽観/m0u) and passes found links (https://dictionary.goo.ne.jp/word/楽観/) to DictParse.
@@ -22,7 +22,7 @@ More specifically it takes the user input and selected mode, which are passed by
   * `m0u` "forward", starts with these characters
   * `m1u` "exact", exactly this
   * `m2u` "backward", ends with these characters
-  * `m3u` somewhere in the meaning or explanation
+  * `m3u` somewhere in the definition or explanation
   * `m4u` same as m0u 
   * `m5u` same as m0u 
   * `m6u` somewhere in the word or title

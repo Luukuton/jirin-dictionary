@@ -38,7 +38,7 @@ public class JirinUI extends Application {
     private Stage settingsStage;
     private String sourceURL;
     private TextField searchField, resultsHeader, error;
-    private TextArea resultsMeaning;
+    private TextArea resultsDefinition;
 
     /**
      * The main window of the application.
@@ -79,11 +79,11 @@ public class JirinUI extends Application {
 
         resultsHeader = new TextField();
 
-        resultsMeaning = new TextArea();
-        resultsMeaning.setPrefSize(960, 300);
-        resultsMeaning.setWrapText(true);
-        ScrollPane resultsMeaningArea = new ScrollPane();
-        resultsMeaningArea.setContent(resultsMeaning);
+        resultsDefinition = new TextArea();
+        resultsDefinition.setPrefSize(960, 300);
+        resultsDefinition.setWrapText(true);
+        ScrollPane resultsDefinitionArea = new ScrollPane();
+        resultsDefinitionArea.setContent(resultsDefinition);
 
         sourceLink = new Hyperlink();
         sourceLink.setDisable(true);
@@ -112,7 +112,7 @@ public class JirinUI extends Application {
         error.setFont(contentFont);
         searchField.setFont(searchFont);
         resultsHeader.setFont(headerFont);
-        resultsMeaning.setFont(contentFont);
+        resultsDefinition.setFont(contentFont);
         sourceLink.setFont(contentFont);
 
         // Styles
@@ -120,7 +120,7 @@ public class JirinUI extends Application {
         content.getStyleClass().add("general-style");
         sourceLink.getStyleClass().add("hyperlink");
 
-        setInputFieldStyles(resultsMeaning, resultsHeader, error, helpText);
+        setInputFieldStyles(resultsDefinition, resultsHeader, error, helpText);
 
         // Do not focus on anything at app launch.
         helpText.setFocusTraversable(false);
@@ -188,7 +188,7 @@ public class JirinUI extends Application {
         content.add(searchBtn,      1, row);
         content.add(error,          0, ++row);
         content.add(resultsHeader,  0, row);
-        content.add(resultsMeaning, 0, ++row);
+        content.add(resultsDefinition, 0, ++row);
 
         VBox.setVgrow(header, Priority.NEVER);
         VBox.setVgrow(content, Priority.ALWAYS);
@@ -232,7 +232,7 @@ public class JirinUI extends Application {
         Platform.runLater(() -> {
             if (entries == null) {
                 resultsHeader.setText("");
-                resultsMeaning.setText("");
+                resultsDefinition.setText("");
                 sourceLink.setText("");
                 sourceLink.setDisable(true);
                 error.setText(service.getException());
@@ -291,12 +291,12 @@ public class JirinUI extends Application {
         sourceLink.setText("Source for the word");
         resultsHeader.setText("【" + entries.get(index).getWord() + "】" + entries.get(index).getReading());
 
-        String meaningFormatted = "";
-        for (String m : entries.get(index).getMeanings()) {
-            meaningFormatted = meaningFormatted.concat(m + "\n\n");
+        String definitionFormatted = "";
+        for (String m : entries.get(index).getDefinitions()) {
+            definitionFormatted = definitionFormatted.concat(m + "\n\n");
         }
 
-        resultsMeaning.setText(meaningFormatted);
+        resultsDefinition.setText(definitionFormatted);
     }
 
     /**
@@ -447,7 +447,7 @@ public class JirinUI extends Application {
     /**
      * Sets styling for text input fields and them to be non-editable.
      *
-     * @param area text area for meanings
+     * @param area text area for definitions
      * @param fields other text fields
      */
 

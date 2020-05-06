@@ -1,4 +1,4 @@
-# Jirin
+# Jirin Dictionary
 A Java application for searching and parsing online monolingual Japanese dictionaries. Initially support only for [goo辞典](https://dictionary.goo.ne.jp/). The name comes from the lesser used Japanese word for dictionary, 辞林.
 
 Current state of the UI:  

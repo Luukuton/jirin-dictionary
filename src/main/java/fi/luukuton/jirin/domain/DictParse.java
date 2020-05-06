@@ -55,25 +55,25 @@ public class DictParse {
     }
 
     /**
-     * Parses all meanings of the word into an ArrayList.
+     * Parses all definitions of the word into an ArrayList.
      *
-     * @return return meanings in an array.
+     * @return return definitions in an array.
      */
 
-    public ArrayList<String> parseMeaning() {
-        ArrayList<String> meanings = new ArrayList<>();
+    public ArrayList<String> parseDefinition() {
+        ArrayList<String> definitions = new ArrayList<>();
 
-        Elements meaningsRaw = dictSite.getElementsByClass("meaning cx");
+        Elements definitionsRaw = dictSite.getElementsByClass("meaning cx");
 
-        // If the word has only one meaning, the HTML structure is a little bit different.
-        if (meaningsRaw.isEmpty()) {
-            meaningsRaw = dictSite.getElementsByClass("content-box contents_area meaning_area p10");
+        // If the word has only one definition, the HTML structure is a little bit different.
+        if (definitionsRaw.isEmpty()) {
+            definitionsRaw = dictSite.getElementsByClass("content-box contents_area meaning_area p10");
         }
 
-        for (Element meaning : meaningsRaw) {
-            meanings.add(meaning.text().strip());
+        for (Element definition : definitionsRaw) {
+            definitions.add(definition.text().strip());
         }
 
-        return meanings;
+        return definitions;
     }
 }

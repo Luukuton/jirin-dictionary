@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 public class DictEntry {
     private final String word, reading;
-    private final ArrayList<String> meanings;
+    private final ArrayList<String> definitions;
 
-    public DictEntry(String word, String reading, ArrayList<String> meanings) {
+    public DictEntry(String word, String reading, ArrayList<String> definitions) {
         this.word = word;
         this.reading = reading;
-        this.meanings = meanings;
+        this.definitions = definitions;
     }
 
     /**
@@ -36,7 +36,7 @@ public class DictEntry {
         return reading;
     }
 
-    public ArrayList<String> getMeanings() {
-        return meanings;
+    public ArrayList<String> getDefinitions() {
+        return definitions;
     }
 }
