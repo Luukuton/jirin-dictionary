@@ -24,4 +24,5 @@
 | 04/28 | 1   | JavaDoc and documentation |
 | 04/28 | 2   | Tests for settings, app icon and minor fixes |
 | 05/06 | 3   | added support for multiple search results and updated documentation |
-**TOTAL: 33,5 hours**
+| 05/07 | 2   | layout rework, loading icon and other fixes |
+**TOTAL: 35,5 hours**
