@@ -35,6 +35,7 @@ public class JirinUI extends Application {
     private ComboBox<String> modeChoice;
     private Hyperlink sourceLink;
     private Settings settings;
+    private StackPane base;
     private Stage settingsStage;
     private String sourceURL;
     private TextField searchField, resultsHeader;
@@ -52,6 +53,7 @@ public class JirinUI extends Application {
         settings = new Settings("settings.properties");
 
         // Basic UI settings
+        base = new StackPane();
         var layout = new VBox();
         content = new GridPane();
         header = new GridPane();
@@ -201,7 +203,8 @@ public class JirinUI extends Application {
         content.add(forwardBtn,        1, row);
 
         layout.getChildren().addAll(header, content);
-        var scene = new Scene(layout, 1280, 720);
+        base.getChildren().add(layout);
+        var scene = new Scene(base, 1280, 720);
 
         // Unfocus out of any element when clicking anywhere.
         scene.setOnMousePressed(e -> content.requestFocus());
@@ -281,22 +284,32 @@ public class JirinUI extends Application {
     private void startSearchThread() {
         final ProgressIndicator progress = new ProgressIndicator();
         progress.setMinSize(60, 50);
+        header.setDisable(true);
+        content.setDisable(true);
+
+        VBox overlay = new VBox(progress);
+        overlay.setAlignment(Pos.CENTER);
+        base.getChildren().add(overlay);
 
         forwardBtn.visibleProperty().setValue(false);
         backwardBtn.visibleProperty().setValue(false);
 
         JirinService jirinService = new JirinService();
 
-        Platform.runLater(() -> header.add(progress, 1, 3));
-
         new Thread(() -> {
             fetchSearchResults(jirinService);
-            Platform.runLater(() -> header.getChildren().remove(progress));
+            Platform.runLater(() -> {
+                base.getChildren().remove(overlay);
+                header.setDisable(false);
+                content.setDisable(false);
+            });
         }).start();
     }
 
     /**
      * The settings window.
+     *
+     * @param mainStage the main stage of the application
      */
 
     private void spawnSettings(Stage mainStage) {

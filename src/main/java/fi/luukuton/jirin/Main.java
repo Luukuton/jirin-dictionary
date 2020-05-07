@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        // Japanese Input (Mozc) doesn't work on Linux with GTK3, so GTK2 is necessary.
+        // Because Japanese Input (Mozc IME) doesn't work on Linux with GTK3, GTK2 is necessary.
         System.setProperty("jdk.gtk.version", "2");
 
         File file = new File("settings.properties");

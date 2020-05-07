@@ -70,7 +70,7 @@ public class JirinService {
     /**
      * Parses the search results page.
      *
-     * @return return links to the results as an ArrayList<String>.
+     * @return return links to the results as an HashSet<String>.
      */
 
     private HashSet<String> parseSearchResults() throws IOException {
