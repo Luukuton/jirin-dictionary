@@ -31,7 +31,6 @@ public class JirinService {
     public ArrayList<DictEntry> queryDict(String input, String mode) {
         exception = "Search term cannot be nothing.";
         contentURL = input + "/" + mode;
-
         if (input.length() == 0) {
             return null;
         }

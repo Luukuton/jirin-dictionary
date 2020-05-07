@@ -33,7 +33,6 @@ public class JirinUI extends Application {
     private Button searchBtn, settingsBtn, forwardBtn, backwardBtn;
     private GridPane header, content;
     private ComboBox<String> modeChoice;
-    private Font searchFont, headerFont, contentFont;
     private Hyperlink sourceLink;
     private Settings settings;
     private Stage settingsStage;
@@ -49,6 +48,7 @@ public class JirinUI extends Application {
 
         // Better antialiasing for the text.
         System.setProperty("prism.lcdtext", "false");
+
         settings = new Settings("settings.properties");
 
         // Basic UI settings
@@ -70,9 +70,9 @@ public class JirinUI extends Application {
         header.setHgap(5);
 
         // Search bar & buttons
+        var helpText = new TextField("Examples: 猫, 楽観, 聞く. As in 'cat', 'optimism', 'to hear'.");
         searchField = new TextField();
         searchField.setPromptText("Search here..");
-        var helpText = new TextField("Examples: 猫, 楽観, 聞く. As in 'cat', 'optimism', 'to hear'.");
         modeChoice = new ComboBox<>(FXCollections.observableArrayList("Exact", "Forward", "Backward"));
         modeChoice.getSelectionModel().select("Exact");
         modeChoice.setPrefSize(150, 50);
@@ -107,9 +107,9 @@ public class JirinUI extends Application {
         );
 
         // Fonts
-        searchFont = fontSet(settings.getSearchFont(), 40);
-        headerFont = fontSet(settings.getContentFont(), 30);
-        contentFont = fontSet(settings.getContentFont(), 25);
+        Font searchFont = fontSet(settings.getSearchFont(), 30);
+        Font headerFont = fontSet(settings.getContentFont(), 26);
+        Font contentFont = fontSet(settings.getContentFont(), 22);
 
         helpText.setFont(contentFont);
         searchField.setFont(searchFont);
@@ -118,8 +118,8 @@ public class JirinUI extends Application {
         sourceLink.setFont(contentFont);
 
         // Styles
-        header.getStyleClass().addAll("general-style", "header");
-        content.getStyleClass().add("general-style");
+        header.getStyleClass().addAll("primary", "header");
+        content.getStyleClass().add("primary");
         sourceLink.getStyleClass().add("hyperlink");
 
         setInputFieldStyles(resultsDefinition, resultsHeader, helpText);
@@ -284,6 +284,7 @@ public class JirinUI extends Application {
 
         forwardBtn.visibleProperty().setValue(false);
         backwardBtn.visibleProperty().setValue(false);
+
         JirinService jirinService = new JirinService();
 
         Platform.runLater(() -> header.add(progress, 1, 3));
@@ -303,15 +304,18 @@ public class JirinUI extends Application {
         var settingsContent = new GridPane();
         var scene = new Scene(settingsContent);
 
-        Button saveBtn = new Button(), cancelBtn = new Button();
-        Region saveBtnRegion = new Region(), cancelBtnRegion = new Region();
-        Label contentFontLabel = new Label(), searchFontLabel = new Label(), themeLabel = new Label();
-        Label notice = new Label();
-
         settingsContent.setPadding(new Insets(10));
         settingsContent.setAlignment(Pos.TOP_CENTER);
         settingsContent.setVgap(10);
         settingsContent.setHgap(5);
+
+        Button saveBtn = new Button(), cancelBtn = new Button();
+        Region saveBtnRegion = new Region(), cancelBtnRegion = new Region();
+
+        var contentFontLabel = new Label("Content font");
+        var searchFontLabel = new Label("Search font");
+        var themeLabel = new Label("Theme");
+        var notice = new Label("The app will restart itself \nif there are any font changes.");
 
         saveBtn.setPrefSize(30, 30);
         saveBtn.getStyleClass().add("button");
@@ -323,10 +327,6 @@ public class JirinUI extends Application {
         cancelBtnRegion.setId("cancel-icon");
         cancelBtn.setGraphic(cancelBtnRegion);
 
-        themeLabel.setText("Theme");
-        searchFontLabel.setText("Search font");
-        contentFontLabel.setText("Content font");
-        notice.setText("The app will restart itself \nif there are any font changes.");
 
         var themeChoice = new ComboBox<>(FXCollections.observableArrayList(
                 "Dark",
@@ -356,7 +356,17 @@ public class JirinUI extends Application {
                 Objects.requireNonNull(JirinUI.class.getClassLoader().getResource("style.css")).toExternalForm()
         );
 
-        settingsContent.getStyleClass().add("settings");
+        if (themeText.toLowerCase().equals("light")) {
+            settingsContent.getStyleClass().add("light");
+        } else {
+            settingsContent.getStyleClass().add("dark");
+        }
+
+        settingsContent.getStyleClass().addAll("primary", "settings");
+        contentFontLabel.getStyleClass().add("settings");
+        searchFontLabel.getStyleClass().add("settings");
+        themeLabel.getStyleClass().add("settings");
+        notice.getStyleClass().add("settings");
 
         // Actions
         saveBtn.setOnAction(e -> {
@@ -398,14 +408,16 @@ public class JirinUI extends Application {
         settingsContent.add(themeLabel,        0, row);
         settingsContent.add(themeChoice,       1, row);
         settingsContent.add(searchFontLabel,   0, ++row);
-        settingsContent.add(searchFontChoice, 1, row);
+        settingsContent.add(searchFontChoice,  1, row);
         settingsContent.add(contentFontLabel,  0, ++row);
-        settingsContent.add(contentFontChoice,  1, row);
+        settingsContent.add(contentFontChoice, 1, row);
         settingsContent.add(notice,            1, ++row);
         settingsContent.add(saveBtn,           0, ++row);
         settingsContent.add(cancelBtn,         1, row);
 
         scene.setOnMousePressed(e -> settingsContent.requestFocus());
+        settingsStage.setX(mainStage.getX() + mainStage.getWidth() / 3);
+        settingsStage.setY(mainStage.getY() + mainStage.getHeight() / 3);
         settingsStage.setMinWidth(400);
         settingsStage.setMinHeight(275);
         settingsStage.setMaxWidth(400);
@@ -449,7 +461,7 @@ public class JirinUI extends Application {
 
         for (TextField f : fields) {
             f.getStyleClass().add("copyable-label");
-            f.getStyleClass().add("general-style");
+            f.getStyleClass().add("primary");
             f.setEditable(false);
         }
     }

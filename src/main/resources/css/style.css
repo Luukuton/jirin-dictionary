@@ -20,13 +20,13 @@
 }
 
 /* General */
-.general-style {
+.primary {
     -fx-background-color: -bg-color;
     -fx-border-color: -bg-color;
     -fx-text-fill: -font-color;
 }
 
-.general-style .content {
+.primary .content {
     -fx-background-radius: 0;
 }
 
@@ -36,6 +36,7 @@
 }
 
 .settings {
+    -fx-text-fill: -font-color;
     -fx-font-family: "Noto Sans JP";
     -fx-font-size: 15px;
 }
