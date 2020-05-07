@@ -1,5 +1,5 @@
 /**
- * Reading and writing to the files
+ * Reading and writing to files
  */
 
 package fi.luukuton.jirin.dao;

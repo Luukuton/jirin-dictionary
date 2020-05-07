@@ -14,10 +14,11 @@ import java.util.ArrayList;
 
 public class DictParse {
     private final Document dictSite;
+    private final String url;
 
-    public DictParse(String link) throws IOException {
-        String domainURL = "https://dictionary.goo.ne.jp";
-        dictSite = Jsoup.connect(domainURL + link).get();
+    public DictParse(String url) throws IOException {
+        dictSite = Jsoup.connect(Dictionaries.DICT_GOO + url).get();
+        this.url = url;
     }
 
     /**
@@ -75,5 +76,9 @@ public class DictParse {
         }
 
         return definitions;
+    }
+
+    public String getURL() {
+        return url;
     }
 }

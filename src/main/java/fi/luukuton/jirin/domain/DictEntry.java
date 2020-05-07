@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 
 public class DictEntry {
+    private String url;
     private final String word, reading;
     private final ArrayList<String> definitions;
 
@@ -38,5 +39,13 @@ public class DictEntry {
 
     public ArrayList<String> getDefinitions() {
         return definitions;
+    }
+
+    public String getURL() {
+        return url;
+    }
+
+    public void setURL(String url) {
+        this.url = url;
     }
 }

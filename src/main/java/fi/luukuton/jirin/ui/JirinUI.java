@@ -1,5 +1,6 @@
 package fi.luukuton.jirin.ui;
 
+import fi.luukuton.jirin.domain.Dictionaries;
 import fi.luukuton.jirin.domain.JirinService;
 import fi.luukuton.jirin.domain.DictEntry;
 import fi.luukuton.jirin.dao.Settings;
@@ -37,7 +38,7 @@ public class JirinUI extends Application {
     private Settings settings;
     private Stage settingsStage;
     private String sourceURL;
-    private TextField searchField, resultsHeader, error;
+    private TextField searchField, resultsHeader;
     private TextArea resultsDefinition;
 
     /**
@@ -55,12 +56,15 @@ public class JirinUI extends Application {
         content = new GridPane();
         header = new GridPane();
 
+        layout.setSpacing(-11);
+
         content.setMinHeight(100);
         content.setAlignment(Pos.TOP_CENTER);
         content.setPadding(new Insets(10));
         content.setVgap(5);
         content.setHgap(5);
 
+        header.setAlignment(Pos.TOP_CENTER);
         header.setPadding(new Insets(10));
         header.setVgap(5);
         header.setHgap(5);
@@ -71,12 +75,11 @@ public class JirinUI extends Application {
         var helpText = new TextField("Examples: 猫, 楽観, 聞く. As in 'cat', 'optimism', 'to hear'.");
         modeChoice = new ComboBox<>(FXCollections.observableArrayList("Exact", "Forward", "Backward"));
         modeChoice.getSelectionModel().select("Exact");
+        modeChoice.setPrefSize(150, 50);
 
         createButtons();
 
         // Results
-        error = new TextField();
-
         resultsHeader = new TextField();
 
         resultsDefinition = new TextArea();
@@ -109,7 +112,6 @@ public class JirinUI extends Application {
         contentFont = fontSet(settings.getContentFont(), 25);
 
         helpText.setFont(contentFont);
-        error.setFont(contentFont);
         searchField.setFont(searchFont);
         resultsHeader.setFont(headerFont);
         resultsDefinition.setFont(contentFont);
@@ -120,7 +122,7 @@ public class JirinUI extends Application {
         content.getStyleClass().add("general-style");
         sourceLink.getStyleClass().add("hyperlink");
 
-        setInputFieldStyles(resultsDefinition, resultsHeader, error, helpText);
+        setInputFieldStyles(resultsDefinition, resultsHeader, helpText);
 
         // Do not focus on anything at app launch.
         helpText.setFocusTraversable(false);
@@ -131,16 +133,11 @@ public class JirinUI extends Application {
         // Actions
         searchField.setOnKeyPressed(key -> {
             if (key.getCode().equals(KeyCode.ENTER)) {
-                JirinService jirinService = new JirinService();
-                new Thread( ()-> fetchSearchResults(jirinService)).start();
-
+                startSearchThread();
             }
         });
 
-        searchBtn.setOnAction(e -> {
-            JirinService jirinService = new JirinService();
-            new Thread( ()-> fetchSearchResults(jirinService)).start();
-        });
+        searchBtn.setOnAction(e -> startSearchThread());
 
         settingsBtn.setOnAction(e -> {
             if (settingsStage != null) {
@@ -154,6 +151,16 @@ public class JirinUI extends Application {
             services.showDocument(sourceURL);
         });
 
+        forwardBtn.setOnAction(e -> {
+            currentIndex = (currentIndex < entries.size() - 1) ? currentIndex + 1 : 0;
+            showSearchResult(currentIndex);
+        });
+
+        backwardBtn.setOnAction(e -> {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : entries.size() - 1;
+            showSearchResult(currentIndex);
+        });
+
         // Close all child windows when exiting the main app
         stage.setOnCloseRequest(e -> {
             Platform.exit();
@@ -163,43 +170,43 @@ public class JirinUI extends Application {
         // Scaling GridPane elements while resizing window
         RowConstraints
                 r1 = new RowConstraints(),
-                r2 = new RowConstraints(),
-                r3 = new RowConstraints(),
-                r4 = new RowConstraints();
+                r2 = new RowConstraints();
 
-        ColumnConstraints c1 = new ColumnConstraints();
+        ColumnConstraints
+                c1 = new ColumnConstraints(),
+                c2 = new ColumnConstraints();
 
-        r4.setMinHeight(100);
-        r4.setPrefHeight(Integer.MAX_VALUE);
+        r1.setMaxHeight(100);
+        r2.setMinHeight(100);
+        r2.setPrefHeight(Integer.MAX_VALUE);
 
-        c1.setPercentWidth(80);
+        c1.setPercentWidth(88);
+        c2.setPercentWidth(90);
 
-        content.getRowConstraints().addAll(r1, r2, r3, r4);
-        content.getColumnConstraints().add(c1);
+        header.getColumnConstraints().add(c1);
+        content.getRowConstraints().addAll(r1, r2);
+        content.getColumnConstraints().add(c2);
 
         // Layout
         int row = 0;
-        header.add(settingsBtn,     0, row);
-        header.add(modeChoice,      11, row);
-        header.add(sourceLink,      12, row);
-
-        content.add(helpText,       0, row);
-        content.add(searchField,    0, ++row);
-        content.add(searchBtn,      1, row);
-        content.add(error,          0, ++row);
-        content.add(resultsHeader,  0, row);
+        header.add(modeChoice,         0, row);
+        header.add(settingsBtn,        1, row);
+        header.add(helpText,           0, ++row);
+        header.add(searchField,        0, ++row);
+        header.add(searchBtn,          1, row);
+        header.add(sourceLink,         0, ++row);
+        content.add(resultsHeader,     0, row = 0);
         content.add(resultsDefinition, 0, ++row);
+        content.add(backwardBtn,       0, ++row);
+        content.add(forwardBtn,        1, row);
 
-        VBox.setVgrow(header, Priority.NEVER);
-        VBox.setVgrow(content, Priority.ALWAYS);
         layout.getChildren().addAll(header, content);
-
         var scene = new Scene(layout, 1280, 720);
 
         // Unfocus out of any element when clicking anywhere.
         scene.setOnMousePressed(e -> content.requestFocus());
 
-        stage.setMinHeight(450);
+        stage.setMinHeight(520);
         stage.setMinWidth(800);
         stage.setTitle("Jirin");
         stage.getIcons().add(new Image("jirin_icon.png"));
@@ -231,48 +238,16 @@ public class JirinUI extends Application {
         // It needs to be updated inside Platform.runLater as lambda.
         Platform.runLater(() -> {
             if (entries == null) {
-                resultsHeader.setText("");
+                resultsHeader.setText(service.getException());
                 resultsDefinition.setText("");
                 sourceLink.setText("");
                 sourceLink.setDisable(true);
-                error.setText(service.getException());
-                content.getChildren().remove(forwardBtn);
-                content.getChildren().remove(backwardBtn);
             } else {
                 currentIndex = 0;
                 showSearchResult(currentIndex);
-
                 if (entries.size() > 1) {
-                    forwardBtn = new Button();
-                    backwardBtn = new Button();
-
-                    forwardBtn.setPrefSize(30, 30);
-                    forwardBtn.getStyleClass().add("button");
-                    Region forwardBtnRegion = new Region();
-                    forwardBtnRegion.setId("forward-icon");
-                    forwardBtn.setGraphic(forwardBtnRegion);
-
-                    backwardBtn.setPrefSize(30, 30);
-                    backwardBtn.getStyleClass().add("button");
-                    Region backwardBtnRegion = new Region();
-                    backwardBtnRegion.setId("backward-icon");
-                    backwardBtn.setGraphic(backwardBtnRegion);
-
-                    content.add(backwardBtn,  0, 4);
-                    content.add(forwardBtn,  1, 4);
-
-                    forwardBtn.setOnAction(e -> {
-                        currentIndex = (currentIndex < entries.size() - 1) ? currentIndex + 1 : 0;
-                        showSearchResult(currentIndex);
-                    });
-
-                    backwardBtn.setOnAction(e -> {
-                        currentIndex = (currentIndex > 0) ? currentIndex - 1 : entries.size() - 1;
-                        showSearchResult(currentIndex);
-                    });
-                } else {
-                    content.getChildren().remove(forwardBtn);
-                    content.getChildren().remove(backwardBtn);
+                    forwardBtn.visibleProperty().setValue(true);
+                    backwardBtn.visibleProperty().setValue(true);
                 }
             }
         });
@@ -285,10 +260,10 @@ public class JirinUI extends Application {
      */
 
     private void showSearchResult(int index) {
-        error.setText("");
         sourceLink.setDisable(false);
-        sourceURL = "https://dictionary.goo.ne.jp/word/" + entries.get(index).hexEncodeWord();
-        sourceLink.setText("Source for the word");
+        sourceLink.setText("Web Source");
+        sourceURL = Dictionaries.DICT_GOO + entries.get(index).getURL();
+
         resultsHeader.setText("【" + entries.get(index).getWord() + "】" + entries.get(index).getReading());
 
         String definitionFormatted = "";
@@ -297,6 +272,26 @@ public class JirinUI extends Application {
         }
 
         resultsDefinition.setText(definitionFormatted);
+    }
+
+    /**
+     * Starts a new thread, where the search is performed. Also spawns and removes a loading icon.
+     */
+
+    private void startSearchThread() {
+        final ProgressIndicator progress = new ProgressIndicator();
+        progress.setMinSize(60, 50);
+
+        forwardBtn.visibleProperty().setValue(false);
+        backwardBtn.visibleProperty().setValue(false);
+        JirinService jirinService = new JirinService();
+
+        Platform.runLater(() -> header.add(progress, 1, 3));
+
+        new Thread(() -> {
+            fetchSearchResults(jirinService);
+            Platform.runLater(() -> header.getChildren().remove(progress));
+        }).start();
     }
 
     /**
@@ -366,9 +361,6 @@ public class JirinUI extends Application {
         // Actions
         saveBtn.setOnAction(e -> {
             themeSwitch(themeChoice.getValue());
-            searchFont = fontSet(searchFontChoice.getValue(), 40);
-            headerFont = fontSet(settings.getContentFont(), 30);
-            contentFont = fontSet(contentFontChoice.getValue(), 25);
 
             boolean restartRequired = false;
             if (!settings.getContentFont().equals(contentFontChoice.getValue())
@@ -406,9 +398,9 @@ public class JirinUI extends Application {
         settingsContent.add(themeLabel,        0, row);
         settingsContent.add(themeChoice,       1, row);
         settingsContent.add(searchFontLabel,   0, ++row);
-        settingsContent.add(contentFontChoice, 1, row);
-        settingsContent.add(searchFontChoice,  1, ++row);
-        settingsContent.add(contentFontLabel,  0, row);
+        settingsContent.add(searchFontChoice, 1, row);
+        settingsContent.add(contentFontLabel,  0, ++row);
+        settingsContent.add(contentFontChoice,  1, row);
         settingsContent.add(notice,            1, ++row);
         settingsContent.add(saveBtn,           0, ++row);
         settingsContent.add(cancelBtn,         1, row);
@@ -480,6 +472,22 @@ public class JirinUI extends Application {
         Region settingsBtnRegion = new Region();
         settingsBtnRegion.setId("settings-icon");
         settingsBtn.setGraphic(settingsBtnRegion);
+
+        forwardBtn = new Button();
+        forwardBtn.setPrefSize(30, 30);
+        forwardBtn.getStyleClass().add("button");
+        Region forwardBtnRegion = new Region();
+        forwardBtnRegion.setId("forward-icon");
+        forwardBtn.setGraphic(forwardBtnRegion);
+        forwardBtn.visibleProperty().setValue(false);
+
+        backwardBtn = new Button();
+        backwardBtn.setPrefSize(30, 30);
+        backwardBtn.getStyleClass().add("button");
+        Region backwardBtnRegion = new Region();
+        backwardBtnRegion.setId("backward-icon");
+        backwardBtn.setGraphic(backwardBtnRegion);
+        backwardBtn.visibleProperty().setValue(false);
     }
 
     /**

@@ -44,11 +44,15 @@ public class JirinService {
             if (!(links == null)) {
                 for (String link : links) {
                     DictParse parser = new DictParse(link);
-                    results.add(new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseDefinition()));
+                    DictEntry e = new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseDefinition());
+                    e.setURL(parser.getURL());
+                    results.add(e);
                 }
             } else {
                 DictParse parser = new DictParse("/word/" + input);
-                results.add(new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseDefinition()));
+                DictEntry e = new DictEntry(parser.parseWord(), parser.parseReading(), parser.parseDefinition());
+                e.setURL("/word/" + e.hexEncodeWord());
+                results.add(e);
             }
 
             return results;
@@ -73,9 +77,8 @@ public class JirinService {
     private HashSet<String> parseSearchResults() throws IOException {
         HashSet<String> links = new HashSet<>();
         ArrayList<Elements> searchResults = new ArrayList<>();
-        String domainURL = "https://dictionary.goo.ne.jp";
 
-        Document searchResultPage = Jsoup.connect(domainURL + "/srch/jn/" + contentURL).get();
+        Document searchResultPage = Jsoup.connect(Dictionaries.DICT_GOO + "/srch/jn/" + contentURL).get();
         Elements queryResults = searchResultPage.getElementsByClass("content_list idiom lsize");
 
         if (!queryResults.isEmpty()) {
