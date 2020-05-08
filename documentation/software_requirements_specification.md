@@ -9,12 +9,12 @@ Interface currently:
 ![current_ui](pictures/ui_preview.gif)
 
 ## Functionality
-- [x] Responsive UI
-- [x] Search words or phrases through a search bar (returns word, reading, definitions)
-- [x] Different search modes ("exact", "forward", "backward")
-- [x] Searching can return multiple responses
-- [x] Customize the application through some basic settings (font, theme)
-- [x] Open up the source web page through a link
+* [x] Responsive UI
+* [x] Search words or phrases through a search bar (returns word, reading, definitions)
+* [x] Searching can return multiple responses for one query
+* [x] Different search modes ("exact", "forward", "backward")
+* [x] Customize the application through some basic settings (search bar font, content font, dark/light theme)
+* [x] Open up the source web page through a link
 
 ## Ideas for future
  * More search modes such as "includes" and "includes in definition"

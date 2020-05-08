@@ -19,7 +19,6 @@ Current state of the UI:
 ## Running
 
 The application can be run with: 
-
 ```
 mvn compile exec:java -Dexec.mainClass=fi.luukuton.jirin.Main
 ```
@@ -27,34 +26,30 @@ mvn compile exec:java -Dexec.mainClass=fi.luukuton.jirin.Main
 ## Testing
 
 Tests can be performed with: 
-
 ```
 mvn test
 ```
-Tests require an internet connection as they utilize the online dictionary Goo.
+
+Automatic testing requires an internet connection as it utilizes an online dictionary.
 
 Code coverage can be created with: 
-
 ```
 mvn jacoco:report
 ```
 
 Code coverage can be viewed by opening _target/site/jacoco/index.html_ in a browser.
 
-## Generating JAR file
+## Generating a JAR file
 
-Following command 
-
+Following command: 
 ```
 mvn package
 ```
-
-generates a runnable JAR file, _jirin-1.0-SNAPSHOT.jar_, to the _target_ directory.
+generates a runnable JAR file, _jirin-1.5-SNAPSHOT.jar_, to the _target_ directory.
 
 ## JavaDoc
 
 JavaDoc files can be created with: 
-
 ```
 mvn javadoc:javadoc
 ```
@@ -64,7 +59,6 @@ They can be viewed by opening _target/site/apidocs/index.html_ in a browser.
 ## CheckStyle
 
 Checks defined in [checkstyle.xml](checkstyle.xml) can be executed with: 
-
 ```
 mvn jxr:jxr checkstyle:checkstyle
 ```

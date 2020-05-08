@@ -1,6 +1,9 @@
 # Testing document
+## Automatic testing (JUnit4)
+**Automatic testing requires an internet connection as it utilizes an online dictionary.**
 
-## JUnit4 Testing
+![test class diagram](pictures/test_class_diagram.png)
+
 ### Application logic
 Application logic ([fi.luukuton.jirin.domain](../src/main/java/fi/luukuton/jirin/domain)), or in other words: the core of the application, is tested with three test classes:
 ##### DictParseTest

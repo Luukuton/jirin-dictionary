@@ -25,4 +25,5 @@
 | 04/28 | 2   | Tests for settings, app icon and minor fixes |
 | 05/06 | 3   | added support for multiple search results and updated documentation |
 | 05/07 | 2   | layout rework, loading icon and other fixes |
-**TOTAL: 35,5 hours**
+| 05/08 | 2   | added testing document and updated documentation |
+**TOTAL: 37,5 hours**
