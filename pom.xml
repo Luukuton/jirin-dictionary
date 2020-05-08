@@ -58,6 +58,7 @@
                 <configuration>
                     <excludes>
                         <exclude>fi/luukuton/jirin/ui/*</exclude>
+                        <exclude>fi/luukuton/jirin/Main.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>

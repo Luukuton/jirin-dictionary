@@ -11,12 +11,14 @@ public class Main {
         // Because Japanese Input (Mozc IME) doesn't work on Linux with GTK3, GTK2 is necessary.
         System.setProperty("jdk.gtk.version", "2");
 
+        // Creates a new config file, if there isn't one.
         File file = new File("settings.properties");
         if (file.createNewFile()) {
             Settings settings = new Settings("settings.properties");
             settings.saveSettings("M Plus 1p", "M Plus 1p", "dark");
         }
 
+        // Launches the application.
         JirinUI.main(args);
     }
 }

@@ -11,9 +11,6 @@ public class DictParseTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        // Basic URL for the dictionary.
-        String mode = "/m0u/";
-
         // Dictionary entry for the word "猫" as in "cat".
         parserBasic = new DictParse( "/word/%E7%8C%AB");
 
@@ -24,27 +21,46 @@ public class DictParseTest {
     }
 
     @Test
-    public void equalWhenWordParsedCorrectly() {
+    public void equalWhenNormalWordParsedCorrectly() {
         assertEquals("猫", parserBasic.parseWord());
+    }
+
+    @Test
+    public void equalWhenNoKanjiWordParsedCorrectly() {
         assertEquals("ふらふら", parserNoKanji.parseWord());
     }
 
     @Test
-    public void equalWhenWordReadingParsedCorrectly() {
+    public void equalWhenNormalWordReadingParsedCorrectly() {
         assertEquals("ねこ", parserBasic.parseReading());
+    }
+
+    @Test
+    public void equalWhenNoKanjiWordReadingParsedCorrectly() {
         assertEquals("ふらふら", parserNoKanji.parseReading());
     }
 
     @Test
-    public void equalWhenWordDefinitionsParsedCorrectly() {
-        String secondDefinition = "２ 《胴を猫の皮で張るところから》三味線のこと。";
-        String lastDefinition = "５ 「猫車」の略。";
-        assertEquals(secondDefinition, parserBasic.parseDefinition().get(1));
-        assertEquals(lastDefinition, parserBasic.parseDefinition().get(5));
+    public void equalWhenNormalWordDefinitionsParsedCorrectly() {
+        assertEquals(
+                "２ 《胴を猫の皮で張るところから》三味線のこと。",
+                parserBasic.parseDefinition().get(1)
+        );
+        assertEquals(
+                "５ 「猫車」の略。",
+                parserBasic.parseDefinition().get(5)
+        );
+    }
 
-        secondDefinition = "２ からだに力がはいらないさま。意識がはっきりしないさま。「熱でふらふらする」「ふらふらした足どり」";
-        lastDefinition = "４ 態度が定まらないさま。「方針がふらふらする」";
-        assertEquals(secondDefinition, parserNoKanji.parseDefinition().get(1));
-        assertEquals(lastDefinition, parserNoKanji.parseDefinition().get(3));
+    @Test
+    public void equalWhenNoKanjiWordDefinitionsParsedCorrectly() {
+        assertEquals(
+                "２ からだに力がはいらないさま。意識がはっきりしないさま。「熱でふらふらする」「ふらふらした足どり」",
+                parserNoKanji.parseDefinition().get(1)
+        );
+        assertEquals(
+                "４ 態度が定まらないさま。「方針がふらふらする」",
+                parserNoKanji.parseDefinition().get(3)
+        );
     }
 }
