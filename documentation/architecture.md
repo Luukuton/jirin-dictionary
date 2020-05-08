@@ -42,6 +42,7 @@ Dictonaries currently:
 * [goo辞典](https://dictionary.goo.ne.jp)
 
 ## Sequence diagram
+
 ![sequence diagram](pictures/sequence_diagram.png)
 
 ## Graphical User Interface

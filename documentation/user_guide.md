@@ -14,14 +14,16 @@ If the settings file (settings.properties) is not present in the same folder as 
 
 Settings can be changed through the settins button (gear icon) inside the app.
 
-Settings view: 
+Settings view:
+
 ![settings](pictures/settings.png)
 
 By changing either of the fonts and pressing the checkmark (save), the application will restart itself. By only chaning the theme, the application will not restart.
 
 The cross cancels any changes made. By closing the settings window exhibits the same behaviour.
 ## Searching
-Application launches to this view: 
+Application launches to this view:
+
 ![main window](pictures/app_after_launch.png)
 
 Search queries can be made by typing into the search bar and pressing enter or clicking the magnifier. Search mode can be changed by selecting a suitable one from the list.
@@ -39,7 +41,8 @@ There are three different search modes:
   * For example when searching '気', it'll match '空気', '元気', '天気' etc.
   * In regex it'd be `/.*気/`.
 
-Search results view: 
+Search results view:
+
 ![search results](pictures/search_results.png)
 
 If the word or phrase searched has multiple entries (usually the case with Forward and Backward modes), they can be viewed by clicking the two arrows.

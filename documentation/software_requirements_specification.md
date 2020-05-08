@@ -5,7 +5,8 @@ With this application, users can search Japanese definitions of Japanese words o
 ## Interface
 The application features a single (responsive) main view, where users can search for words and phrases. Additionally, there's a settings view, where users can change the application theme and fonts.
 
-Interface currently: 
+Interface currently:
+
 ![current_ui](pictures/ui_preview.gif)
 
 ## Functionality
